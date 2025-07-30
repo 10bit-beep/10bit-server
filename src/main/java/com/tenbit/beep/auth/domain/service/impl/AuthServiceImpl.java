@@ -4,13 +4,18 @@ import com.tenbit.beep.auth.domain.domain.User;
 import com.tenbit.beep.auth.domain.dto.LoginRequest;
 import com.tenbit.beep.auth.domain.dto.SignupRequest;
 import com.tenbit.beep.auth.domain.exception.AlreadyUsingIdException;
+import com.tenbit.beep.auth.domain.exception.IllegalArgumentsException;
+import com.tenbit.beep.auth.domain.exception.UserNotFoundException;
 import com.tenbit.beep.auth.domain.exception.ValueMissingException;
+import com.tenbit.beep.auth.domain.jwt.JwtAuthenticationFilter;
+import com.tenbit.beep.auth.domain.jwt.JwtTokenProvider;
 import com.tenbit.beep.auth.domain.repository.UserRepository;
 import com.tenbit.beep.auth.domain.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.regex.Pattern;
 
 @Service
@@ -19,10 +24,12 @@ public class AuthServiceImpl implements AuthService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtTokenProvider jwtTokenProvider;
 
     private static final Pattern EMAIL_PATTERN = Pattern.compile(
             "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$"
     );
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @Override
     public void signup(SignupRequest signupRequest) {
@@ -49,7 +56,7 @@ public class AuthServiceImpl implements AuthService {
                 && studentNumbers[1] >= 1 && studentNumbers[1] <= 4      // 반
                 && studentNumbers[2] >= 0 && studentNumbers[2] <= 1)) {  // 번호 앞자리
             if ((studentNumbers[2] == 1) && (studentNumbers[3] == 9)) {  // 번호 뒷자리
-                throw new IllegalArgumentException("올바르지 않은 학번입니다.");
+                throw new IllegalArgumentsException("올바르지 않은 학번입니다.");
             }
         }
 
@@ -57,11 +64,11 @@ public class AuthServiceImpl implements AuthService {
         if (name.length() >= 2 && name.length() <= 10) {
             for (char ch : name.toCharArray()) {
                 if (ch < 0xAC00 || ch > 0xD7A3) {
-                    throw new IllegalArgumentException("이름은 한글만 가능합니다.");
+                    throw new IllegalArgumentsException("이름은 한글만 가능합니다.");
                 }
             }
         } else {
-            throw new IllegalArgumentException("이름은 2-10자만 가능합니다.");
+            throw new IllegalArgumentsException("이름은 2-10자만 가능합니다.");
         }
 
         // 아이디 확인
@@ -72,21 +79,21 @@ public class AuthServiceImpl implements AuthService {
             for (char ch : publicId.toCharArray()) {
                 if (Character.isLetter(ch)) {
                     if (!((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z'))) {
-                        throw new IllegalArgumentException("아이디는 영어와 숫자만 가능합니다.");
+                        throw new IllegalArgumentsException("아이디는 영어와 숫자만 가능합니다.");
                     }
                     hasAlpha = true;
                 } else if (Character.isDigit(ch)) {
                     hasDigit = true;
                 } else {
-                    throw new IllegalArgumentException("아이디는 영어와 숫자만 가능합니다.");
+                    throw new IllegalArgumentsException("아이디는 영어와 숫자만 가능합니다.");
                 }
             }
 
             if (!(hasAlpha && hasDigit)) {
-                throw new IllegalArgumentException("아이디에 영어와 숫자를 하나씩은 포함해야됩니다.");
+                throw new IllegalArgumentsException("아이디에 영어와 숫자를 하나씩은 포함해야됩니다.");
             }
         } else {
-            throw new IllegalArgumentException("아이디는 4-15자만 가능합니다.");
+            throw new IllegalArgumentsException("아이디는 4-15자만 가능합니다.");
         }
 
         // 비밀번호 확인
@@ -103,7 +110,7 @@ public class AuthServiceImpl implements AuthService {
                 if (ch == prevChar) {
                     repeatCount++;
                     if (repeatCount >= 3) {
-                        throw new IllegalArgumentException("같은 문자가 3번 이상 연속될 수 없습니다.");
+                        throw new IllegalArgumentsException("같은 문자가 3번 이상 연속될 수 없습니다.");
                     }
                 } else {
                     repeatCount = 1;
@@ -120,20 +127,20 @@ public class AuthServiceImpl implements AuthService {
                     hasSpecial = true;
                 }
                 else {
-                    throw new IllegalArgumentException("비밀번호는 영어, 숫자, 특수문자만 가능합니다.");
+                    throw new IllegalArgumentsException("비밀번호는 영어, 숫자, 특수문자만 가능합니다.");
                 }
             }
 
             if (!hasAlpha || !hasDigit || !hasSpecial) {
-                throw new IllegalArgumentException("비밀번호는 영어, 숫자, 특수문자를 최소 1개씩 포함해야 합니다.");
+                throw new IllegalArgumentsException("비밀번호는 영어, 숫자, 특수문자를 최소 1개씩 포함해야 합니다.");
             }
         } else {
-            throw new IllegalArgumentException("비밀번호는 8~20자만 가능합니다.");
+            throw new IllegalArgumentsException("비밀번호는 8~20자만 가능합니다.");
         }
 
         // 이메일 확인
         if (!EMAIL_PATTERN.matcher(email).matches()) {
-            throw new IllegalArgumentException("유효하지 않은 이메일 형식입니다.");
+            throw new IllegalArgumentsException("유효하지 않은 이메일 형식입니다.");
         }
 
         // 최종 확인 후 저장
@@ -149,12 +156,27 @@ public class AuthServiceImpl implements AuthService {
     public String login(LoginRequest loginRequest) {
         String publicId = loginRequest.getPublicId();
         String password = loginRequest.getPassword();
+        Long innerId = loginRequest.getInnerId();
 
         // null값 확인
         if (!(publicId != null && password != null)) {
             throw new ValueMissingException("빈 값을 넣을 수 없습니다.");
         }
 
-        return null;
+        Optional<User> optionalUser = userRepository.findByPublicId(publicId);
+
+        // 실존 유저인지 확인
+        if (optionalUser.isEmpty()) {
+            throw new UserNotFoundException(publicId + "의 유저를 찾을 수 없습니다.");
+        }
+
+        User user = optionalUser.get();
+
+        // 비밀번호 확인
+        if (passwordEncoder.matches(password, user.getPassword())) {
+            return jwtTokenProvider.generateToken(String.valueOf(innerId));
+        } else {
+            throw new UserNotFoundException("비밀번호가 일치하지 않습니다.");
+        }
     }
 }

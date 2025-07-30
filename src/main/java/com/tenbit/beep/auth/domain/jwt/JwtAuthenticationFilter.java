@@ -1,6 +1,9 @@
 package com.tenbit.beep.auth.domain.jwt;
 
+import com.tenbit.beep.auth.domain.exception.IllegalArgumentsException;
+import com.tenbit.beep.auth.domain.exception.TokenExpiredException;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 
@@ -10,7 +13,7 @@ public class JwtAuthenticationFilter extends JwtUtil {
         super(secretKey, expiration);
     }
 
-    public String publicIdFromToken(String token) {
+    public String innerIdFromToken(String token) {
         Claims claims = Jwts.parserBuilder()
                 .setSigningKey(key)
                 .build()
@@ -20,16 +23,17 @@ public class JwtAuthenticationFilter extends JwtUtil {
         return claims.getSubject();
     }
 
-    public Boolean validateToken(String token) {
+    public void validateToken(String token) {
         try {
             Jwts.parserBuilder()
                     .setSigningKey(key)
                     .build()
                     .parseClaimsJws(token);
 
-            return true;
+        } catch (ExpiredJwtException e) {
+            throw new TokenExpiredException(e.getMessage());
         } catch (JwtException | IllegalArgumentException e) {
-            return false;
+            throw new IllegalArgumentsException(e.getMessage());
         }
     }
 }
