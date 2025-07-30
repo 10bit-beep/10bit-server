@@ -34,10 +34,18 @@ public class User {
     private String publicId;
 
     @Column(nullable = false, length = 255)
-    @Size(min = 4, max = 255)
+    @Size(min = 8, max = 255)
     private String password;
 
     @Column(unique = true, nullable = false)
     @Email
     private String email;
+
+    public User(int studentNumber, String name, String publicId, String password, String email) {
+        this.studentNumber = studentNumber;
+        this.name = name;
+        this.publicId = publicId;
+        this.password = password;
+        this.email = email;
+    }
 }
