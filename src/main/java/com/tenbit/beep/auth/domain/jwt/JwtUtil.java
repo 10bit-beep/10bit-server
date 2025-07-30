@@ -6,8 +6,8 @@ import java.security.Key;
 
 public class JwtUtil {
 
-    private final Key key;
-    private final Long expiration;
+    protected final Key key;
+    protected final Long expiration;
 
     public JwtUtil(String secretKey, Long expiration) {
         this.key = Keys.hmacShaKeyFor(secretKey.getBytes());
