@@ -156,7 +156,6 @@ public class AuthServiceImpl implements AuthService {
     public String login(LoginRequest loginRequest) {
         String publicId = loginRequest.getPublicId();
         String password = loginRequest.getPassword();
-        Long innerId = loginRequest.getInnerId();
 
         // null값 확인
         if (!(publicId != null && password != null)) {
@@ -174,7 +173,7 @@ public class AuthServiceImpl implements AuthService {
 
         // 비밀번호 확인
         if (passwordEncoder.matches(password, user.getPassword())) {
-            return jwtTokenProvider.generateToken(String.valueOf(innerId));
+            return jwtTokenProvider.generateToken(String.valueOf(user.getInnerId()));
         } else {
             throw new UserNotFoundException("비밀번호가 일치하지 않습니다.");
         }

@@ -9,5 +9,4 @@ public class LoginRequest {
 
     private String publicId;
     private String password;
-    private Long innerId;
 }
