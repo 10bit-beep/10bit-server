@@ -1,6 +1,7 @@
 package com.tenbit.beep.auth.domain.service.impl;
 
 import com.tenbit.beep.auth.domain.domain.User;
+import com.tenbit.beep.auth.domain.dto.LoginRequest;
 import com.tenbit.beep.auth.domain.dto.SignupRequest;
 import com.tenbit.beep.auth.domain.exception.AlreadyUsingIdException;
 import com.tenbit.beep.auth.domain.exception.ValueMissingException;
@@ -142,5 +143,18 @@ public class AuthServiceImpl implements AuthService {
         } else {
             throw new AlreadyUsingIdException("이미 사용중인 아이디입니다.");
         }
+    }
+
+    @Override
+    public String login(LoginRequest loginRequest) {
+        String publicId = loginRequest.getPublicId();
+        String password = loginRequest.getPassword();
+
+        // null값 확인
+        if (!(publicId != null && password != null)) {
+            throw new ValueMissingException("빈 값을 넣을 수 없습니다.");
+        }
+
+        return null;
     }
 }
