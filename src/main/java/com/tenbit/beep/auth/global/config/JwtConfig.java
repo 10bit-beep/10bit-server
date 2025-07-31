@@ -37,6 +37,7 @@ public class JwtConfig {
 
     @Bean
     public JwtFilter jwtFilter() {
+        System.out.println("JWT 필터 동작");
         return new JwtFilter(jwtAuthenticationFilter());
     }
 }
