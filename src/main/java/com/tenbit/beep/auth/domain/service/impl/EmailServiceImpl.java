@@ -1,5 +1,6 @@
 package com.tenbit.beep.auth.domain.service.impl;
 
+import com.tenbit.beep.auth.domain.dto.SendVerificationEmailRequest;
 import com.tenbit.beep.auth.domain.service.EmailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
@@ -14,17 +15,16 @@ public class EmailServiceImpl implements EmailService {
 
     private final JavaMailSender mailSender;
 
-    @Override
     protected String generateCode() {
         return String.format("%06d", new Random().nextInt(1000000));
     }
 
     @Override
-    public String sendVerificationEmail(String email) {
+    public String sendVerificationEmail(SendVerificationEmailRequest emailRequest) {
         String code = generateCode();
         SimpleMailMessage message = new SimpleMailMessage();
 
-        message.setTo(email);
+        message.setTo(emailRequest.getEmail());
         message.setSubject("[이메일 인증 코드]");
         message.setText("삑 인증코드: " + code);
 

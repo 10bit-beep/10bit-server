@@ -1,7 +1,8 @@
 package com.tenbit.beep.auth.domain.service;
 
+import com.tenbit.beep.auth.domain.dto.SendVerificationEmailRequest;
+
 public interface EmailService {
 
-    public String sendVerificationEmail(String email);
-    protected String generateCode();
+    String sendVerificationEmail(SendVerificationEmailRequest emailRequest);
 }
