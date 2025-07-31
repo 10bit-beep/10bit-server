@@ -23,6 +23,7 @@ public class JwtAuthenticationFilter extends JwtUtil {
         return claims.getSubject();
     }
 
+    // 토큰 만료 확인, 해당 클래스에서 자체적으로 호출해서, 추가적인 호출 필요 없음
     public void validateToken(String token) {
         try {
             Jwts.parserBuilder()
