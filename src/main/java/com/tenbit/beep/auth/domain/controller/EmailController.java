@@ -24,9 +24,19 @@ public class EmailController {
             emailRequest.setEmail(email);
 
             emailService.sendVerificationEmail(emailRequest);
+
             return ResponseEntity.ok("전송 완료");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("전송 실패" + e.getMessage());
+        }
+    }
+
+    @GetMapping("/verify")
+    public ResponseEntity<String> verifyCode(@RequestParam String email, @RequestParam String inputCode) {
+        if (emailService.verifyCode(email, inputCode)) {
+            return ResponseEntity.ok("인증 성공");
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("인증 실패");
         }
     }
 }

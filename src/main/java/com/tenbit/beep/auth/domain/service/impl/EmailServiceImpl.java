@@ -7,6 +7,8 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 @Service
@@ -14,6 +16,7 @@ import java.util.Random;
 public class EmailServiceImpl implements EmailService {
 
     private final JavaMailSender mailSender;
+    private final Map<String, String> codeMap = new HashMap<>();
 
     protected String generateCode() {
         return String.format("%06d", new Random().nextInt(1000000));
@@ -22,6 +25,7 @@ public class EmailServiceImpl implements EmailService {
     @Override
     public String sendVerificationEmail(SendVerificationEmailRequest emailRequest) {
         String code = generateCode();
+        codeMap.put(emailRequest.getEmail(), code);
         SimpleMailMessage message = new SimpleMailMessage();
 
         message.setTo(emailRequest.getEmail());
@@ -30,5 +34,14 @@ public class EmailServiceImpl implements EmailService {
 
         mailSender.send(message);
         return code;
+    }
+
+    @Override
+    public Boolean verifyCode(String email, String inputCode) {
+        if (codeMap.get(email).equals(inputCode)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
