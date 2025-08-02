@@ -36,7 +36,6 @@ public class EmailController {
         if (emailService.verifyCode(email, inputCode)) {
             return ResponseEntity.ok("인증 성공");
         } else {
-            System.out.println("?????????");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("인증 실패");
         }
     }
