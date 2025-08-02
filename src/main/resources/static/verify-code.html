@@ -25,15 +25,13 @@
     }
 
     try {
-      const res = await fetch("/email/verify", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, code })
+      const res = await fetch(`/auth/verify?email=${encodeURIComponent(email)}&inputCode=${encodeURIComponent(code)}`, {
+        method: "GET",
       });
 
       if (res.ok) {
         alert("인증 성공! 회원가입을 계속 진행해주세요.");
-        window.location.href = "/signup.html"; // 다시 회원가입 페이지로 이동
+        window.location.href = "/signup.html";
       } else {
         const error = await res.text();
         alert("인증 실패: " + error);

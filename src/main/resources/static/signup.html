@@ -44,11 +44,9 @@
         return;
       }
 
-      // 3. 인증 코드 확인 요청
-      const verifyRes = await fetch("/auth/verify", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, code })
+      // 3. 인증 코드 확인 요청 (GET으로 수정)
+      const verifyRes = await fetch(`/auth/verify?email=${encodeURIComponent(email)}&inputCode=${encodeURIComponent(code)}`, {
+        method: "GET"
       });
 
       if (!verifyRes.ok) {

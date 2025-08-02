@@ -38,8 +38,9 @@ public class SecurityConfig {
                                 "/login.html",
                                 "/signup.html",
                                 "/email.html",
-                                "/email.verify",
+                                "/verify-code.html",
                                 "/auth/**",
+                                "/email/**",
                                 "/favicon.ico"
                         ).permitAll()
                         .anyRequest().authenticated()
