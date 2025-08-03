@@ -18,7 +18,10 @@
 
     const res = await fetch("/auth/login", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "X-Platform": "WEB"
+      },
       body: JSON.stringify({ publicId, password }),
     });
 
