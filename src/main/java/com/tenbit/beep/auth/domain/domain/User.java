@@ -22,8 +22,11 @@ public class User {
     @Column(nullable = false)
     @Min(0)
     @Max(4000)
-    // 선생님은 0000
+    // 선생님은 0000, 사실상 가비지값 넣어주는거
     private int studentNumber;
+
+    @Enumerated(EnumType.STRING)
+    private Authority authority;
 
     @Column(unique = true, nullable = false, length = 10)
     @Size(min = 2, max = 10)
