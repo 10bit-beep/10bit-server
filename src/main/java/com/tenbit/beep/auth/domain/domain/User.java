@@ -22,7 +22,7 @@ public class User {
     @Column(nullable = false)
     @Min(0)
     @Max(4000)
-    // 선생님은 0000, 사실상 가비지값 넣어주는거
+    // 선생님은 1000, 사실상 가비지값 넣어주는거
     private int studentNumber;
 
     @Enumerated(EnumType.STRING)
