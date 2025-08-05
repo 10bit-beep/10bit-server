@@ -17,7 +17,7 @@ public class BeepApplication {
 //
 //		UserRepository userRepository = context.getBean(UserRepository.class);
 //		DBService dbService = new DBServiceImpl(userRepository);
-//		dbService.resetDB();
+//		dbService.deleteByPublicId("student1");
 	}
 
 }
