@@ -24,7 +24,8 @@ public class JwtFilter extends OncePerRequestFilter {
                 path.startsWith("/email/") ||
                 path.startsWith("/last/") ||
                 path.startsWith("/main/") ||
-                path.startsWith("/img/")) {
+                path.startsWith("/img/") ||
+                path.startsWith("/login/")) {
             filterChain.doFilter(request, response);
             return;
         }
