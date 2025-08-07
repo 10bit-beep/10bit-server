@@ -1,6 +1,6 @@
 package com.tenbit.beep.attendance.controller;
 
-import com.tenbit.beep.attendance.service.AttendanceService;
+import com.tenbit.beep.attendance.service.AttendanceServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AttendanceController {
 
-    private final AttendanceService attendanceService;
+    private final AttendanceServiceImpl attendanceService;
 
     @PostMapping("/check")
     public ResponseEntity<String> checkAttendance(@RequestParam String publicId) {
