@@ -20,7 +20,11 @@ public class JwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String path = request.getRequestURI();
 
-        if (path.startsWith("/auth/") || path.startsWith("/email/")) {
+        if (path.startsWith("/auth/") ||
+                path.startsWith("/email/") ||
+                path.startsWith("/last/") ||
+                path.startsWith("/main/") ||
+                path.startsWith("/img/")) {
             filterChain.doFilter(request, response);
             return;
         }
