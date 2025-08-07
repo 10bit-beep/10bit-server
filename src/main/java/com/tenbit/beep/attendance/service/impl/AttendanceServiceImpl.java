@@ -1,6 +1,7 @@
-package com.tenbit.beep.attendance.service;
+package com.tenbit.beep.attendance.service.impl;
 
 
+import com.tenbit.beep.attendance.service.AttendanceService;
 import com.tenbit.beep.auth.domain.domain.Attendance;
 import com.tenbit.beep.auth.domain.domain.User;
 import com.tenbit.beep.auth.domain.repository.UserRepository;
