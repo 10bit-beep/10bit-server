@@ -25,7 +25,11 @@ public class JwtFilter extends OncePerRequestFilter {
                 path.startsWith("/last/") ||
                 path.startsWith("/main/") ||
                 path.startsWith("/img/") ||
-                path.startsWith("/login/")) {
+                path.startsWith("/login/") ||
+                path.startsWith("/logout/") ||
+                path.startsWith("/room/") ||
+                path.startsWith("/class/") ||
+                path.startsWith("/signup/")) {
             filterChain.doFilter(request, response);
             return;
         }

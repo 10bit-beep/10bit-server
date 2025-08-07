@@ -38,6 +38,10 @@ public class SecurityConfig {
                                 "/main/**",
                                 "/img/**",
                                 "/login/**",
+                                "/logout/**",
+                                "/signup/**",
+                                "/class/**",
+                                "/room/**",
                                 "/auth/**",
                                 "/email/**",
                                 "/favicon.ico"
