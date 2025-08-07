@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     const loginForm = document.querySelector('form');
 
-    loginForm.addEventListener('submit', function (e) {
+    loginForm.addEventListener('submit', async function (e) {
         e.preventDefault();
 
         const userid = document.getElementById('userid').value.trim();
@@ -12,29 +12,32 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-        fetch('http://localhost:3000/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                userid,
-                password,
-            }),
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                if (data.success) {
-                    alert(`환영합니다, ${userid}님!`);
-                    // 필요하면 토큰 저장도 가능
-                    window.location.href = '../main/main.html';
-                } else {
-                    alert('로그인 실패: ' + data.message);
-                }
-            })
-            .catch((err) => {
-                console.error('로그인 오류:', err);
-                alert('서버에 연결할 수 없습니다.');
+        try {
+            const res = await fetch('/auth/login', {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-Platform": "WEB"
+                },
+                body: JSON.stringify({
+                    publicId: userid,
+                    password: password,
+                }),
             });
+
+            if (res.ok) {
+                const token = await res.text();
+                alert(`환영합니다, ${userid}님!`);
+                alert("로그인 성공! 토큰: " + token);
+                // 토큰 저장 (필요시)
+                // localStorage.setItem('token', token);
+                window.location.href = '../main/main.html';
+            } else {
+                alert("로그인 실패");
+            }
+        } catch (err) {
+            console.error('로그인 오류:', err);
+            alert('서버에 연결할 수 없습니다.');
+        }
     });
 });
