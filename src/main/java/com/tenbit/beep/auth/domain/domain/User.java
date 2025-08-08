@@ -53,5 +53,6 @@ public class User {
         this.publicId = publicId;
         this.password = password;
         this.email = email;
+        this.attendance = Attendance.FALSE;
     }
 }
