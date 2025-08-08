@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 },
                 body: JSON.stringify({
                     publicId: userid,
-                    password: password,
+                    password: password
                 }),
             });
 

@@ -47,9 +47,9 @@ public class User {
     @Email
     private String email;
 
-    public User(int studentNumber, String name, String publicId, String password, String email) {
+    public User(int studentNumber,/* String name,*/ String publicId, String password, String email) {
         this.studentNumber = studentNumber;
-        this.name = name;
+//        this.name = name;
         this.publicId = publicId;
         this.password = password;
         this.email = email;
