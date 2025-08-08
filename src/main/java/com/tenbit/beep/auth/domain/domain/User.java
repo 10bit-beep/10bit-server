@@ -31,7 +31,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Attendance attendance;
 
-    @Column(unique = true, nullable = false, length = 10)
+    @Column(nullable = false, length = 10)
     @Size(min = 2, max = 10)
     private String name;
 
