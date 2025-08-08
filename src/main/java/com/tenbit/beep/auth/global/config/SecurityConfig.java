@@ -34,11 +34,14 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/",
-                                "/index.html",
-                                "/login.html",
-                                "/signup.html",
-                                "/email.html",
-                                "/verify-code.html",
+                                "/last/**",
+                                "/main/**",
+                                "/img/**",
+                                "/login/**",
+                                "/logout/**",
+                                "/signup/**",
+                                "/class/**",
+                                "/room/**",
                                 "/auth/**",
                                 "/email/**",
                                 "/favicon.ico"
