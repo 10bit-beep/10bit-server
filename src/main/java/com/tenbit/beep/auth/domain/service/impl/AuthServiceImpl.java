@@ -40,7 +40,7 @@ public class AuthServiceImpl implements AuthService {
         String email = signupRequest.getEmail();
 
         // null값 확인
-        if (!(/*name != null && */publicId != null && password != null && email != null)) {
+        if (!(publicId != null && password != null && email != null)) {
             throw new ValueMissingException("빈 값을 넣을 수 없습니다.");
         }
 

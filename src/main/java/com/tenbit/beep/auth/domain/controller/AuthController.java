@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -22,12 +23,12 @@ public class AuthController {
     private final UserRepository userRepository;
 
     @PostMapping("/signup")
-    public ResponseEntity<String> signup(@RequestBody SignupRequest signupRequest) {
+    public ResponseEntity<Object> signup(@RequestBody SignupRequest signupRequest) {
         try {
             authService.signup(signupRequest);
-            return ResponseEntity.ok("Signup success");
+            return ResponseEntity.ok(Map.of("publicId", signupRequest.getPublicId(), "success", true));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Signup failed");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 
