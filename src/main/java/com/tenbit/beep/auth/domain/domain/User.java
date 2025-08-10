@@ -47,10 +47,6 @@ public class User {
     @Email
     private String email;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private Attendance attendance;
-
     public User(int studentNumber, String name, String publicId, String password, String email) {
         this.studentNumber = studentNumber;
         this.name = name;
