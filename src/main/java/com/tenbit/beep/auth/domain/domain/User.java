@@ -22,10 +22,16 @@ public class User {
     @Column(nullable = false)
     @Min(0)
     @Max(4000)
-    // 선생님은 0000
+    // 선생님은 1000, 사실상 가비지값 넣어주는거
     private int studentNumber;
 
-    @Column(unique = true, nullable = false, length = 10)
+    @Enumerated(EnumType.STRING)
+    private Authority authority;
+
+    @Enumerated(EnumType.STRING)
+    private Attendance attendance;
+
+    @Column(nullable = false, length = 10)
     @Size(min = 2, max = 10)
     private String name;
 
@@ -47,5 +53,6 @@ public class User {
         this.publicId = publicId;
         this.password = password;
         this.email = email;
+        this.attendance = Attendance.FALSE;
     }
 }

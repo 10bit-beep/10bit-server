@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>회원가입</title>
+  <link rel="icon" href="data:,">
+</head>
+<body>
+<h1>회원가입</h1>
+<input id="studentNumber" placeholder="학번 (예: 1234)" />
+<input id="name" placeholder="이름 (예: 홍길동)" />
+<input id="username" placeholder="아이디" />
+<input id="password" type="password" placeholder="비밀번호" />
+<input id="email" placeholder="이메일 (예: test@example.com)" />
+<button id="signup-btn">회원가입</button>
+<button onclick="history.back()">돌아가기</button>
+
+<script>
+  document.getElementById("signup-btn").onclick = async function () {
+    const studentNumber = Number(document.getElementById("studentNumber").value);
+    const name = document.getElementById("name").value;
+    const publicId = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+    const email = document.getElementById("email").value;
+
+    if (!email || !name || !publicId || !password || !studentNumber) {
+      alert("모든 항목을 입력해주세요.");
+      return;
+    }
+
+    // 1. 이메일 인증 요청
+    try {
+      const emailRes = await fetch(`/auth/email?email=${encodeURIComponent(email)}`);
+      if (!emailRes.ok) {
+        const err = await emailRes.text();
+        alert("이메일 전송 실패: " + err);
+        return;
+      }
+
+      // 2. 인증 코드 입력 받기
+      const code = prompt("이메일로 전송된 인증 코드를 입력하세요:");
+      if (!code) {
+        alert("인증 코드 입력이 취소되었습니다.");
+        return;
+      }
+
+      // 3. 인증 코드 확인 요청 (GET으로 수정)
+      const verifyRes = await fetch(`/auth/verify?email=${encodeURIComponent(email)}&inputCode=${encodeURIComponent(code)}`, {
+        method: "GET"
+      });
+
+      if (!verifyRes.ok) {
+        const err = await verifyRes.text();
+        alert("인증 코드 확인 실패: " + err);
+        return;
+      }
+
+      // 4. 회원가입 요청
+      const signupRes = await fetch("/auth/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          studentNumber,
+          name,
+          publicId,
+          password,
+          email
+        })
+      });
+
+      if (signupRes.ok) {
+        alert("회원가입 성공!");
+        window.location.href = "/login.html"; // 로그인 페이지로 이동
+      } else if (signupRes.status === 409) {
+        alert("이미 존재하는 아이디입니다.");
+      } else {
+        alert("회원가입 실패");
+      }
+
+    } catch (err) {
+      alert("오류 발생: " + err.message);
+      console.error(err);
+    }
+  };
+</script>
+</body>
+</html>
