@@ -11,8 +11,6 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findByPublicId(String publicId);
-//    @Transactional
-//    void deleteByName(String name);
     @Transactional
     void deleteByInnerId(Long innerId);
     @Transactional
