@@ -1,6 +1,7 @@
 package com.tenbit.beep.auth.global.config;
 
 import com.tenbit.beep.auth.domain.jwt.JwtAuthenticationFilter;
+import com.tenbit.beep.auth.domain.jwt.JwtFilter;
 import com.tenbit.beep.auth.domain.jwt.JwtTokenProvider;
 import com.tenbit.beep.auth.domain.jwt.JwtUtil;
 import io.jsonwebtoken.Jwt;
@@ -32,5 +33,10 @@ public class JwtConfig {
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter() {
         return new JwtAuthenticationFilter(secret, expiration);
+    }
+
+    @Bean
+    public JwtFilter jwtFilter() {
+        return new JwtFilter(jwtAuthenticationFilter());
     }
 }

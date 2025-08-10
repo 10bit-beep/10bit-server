@@ -51,7 +51,7 @@ public class AuthServiceImpl implements AuthService {
         studentNumbers[2] = studentNumber % 100 / 10;
         studentNumbers[3] = studentNumber % 10;
 
-        if ((studentNumbers[0] == 0 && studentNumbers[1] == 0 && studentNumbers[2] == 0 && studentNumbers[3] == 0)      // 교사일 경우
+        if ((studentNumbers[0] == 1 && studentNumbers[1] == 0 && studentNumbers[2] == 0 && studentNumbers[3] == 0)      // 교사일 경우
             || (studentNumbers[0] >= 1 && studentNumbers[0] <= 3         // 학년
                 && studentNumbers[1] >= 1 && studentNumbers[1] <= 4      // 반
                 && studentNumbers[2] >= 0 && studentNumbers[2] <= 1)) {  // 번호 앞자리
