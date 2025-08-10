@@ -26,7 +26,7 @@ public class AttendanceServiceImpl implements AttendanceService {
     }
 
     @Override
-    public void resetALlAttendance() {
+    public void resetAllAttendance() {
         List<User> users = userRepository.findAll();
         for (User user : users) {
             user.setAttendance(Attendance.FALSE);
