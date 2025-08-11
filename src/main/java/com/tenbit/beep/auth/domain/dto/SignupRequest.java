@@ -8,7 +8,7 @@ import lombok.Setter;
 public class SignupRequest {
 
     private int studentNumber;
-    private String name;
+//    private String name;
     private String publicId;
     private String password;
     private String email;

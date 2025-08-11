@@ -20,7 +20,7 @@ public class JwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String path = request.getRequestURI();
 
-        if (path.startsWith("/auth/") ||
+        if (path.equals("/favicon.ico") || path.startsWith("/.well-known/") || path.startsWith("/auth/") ||
                 path.startsWith("/email/") ||
                 path.startsWith("/last/") ||
                 path.startsWith("/main/") ||
@@ -33,6 +33,8 @@ public class JwtFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
+
+        System.out.println(path + ": wrong");
 
         String authHeader = request.getHeader("Authorization");
 

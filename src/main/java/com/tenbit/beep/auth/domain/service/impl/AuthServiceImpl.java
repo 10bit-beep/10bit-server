@@ -34,13 +34,13 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public void signup(SignupRequest signupRequest) {
         int studentNumber = signupRequest.getStudentNumber();
-        String name = signupRequest.getName();
+//        String name = signupRequest.getName();
         String publicId = signupRequest.getPublicId();
         String password = signupRequest.getPassword();
         String email = signupRequest.getEmail();
 
         // null값 확인
-        if (!(name != null && publicId != null && password != null && email != null)) {
+        if (!(publicId != null && password != null && email != null)) {
             throw new ValueMissingException("빈 값을 넣을 수 없습니다.");
         }
 
@@ -61,15 +61,15 @@ public class AuthServiceImpl implements AuthService {
         }
 
         // 이름 확인
-        if (name.length() >= 2 && name.length() <= 10) {
-            for (char ch : name.toCharArray()) {
-                if (ch < 0xAC00 || ch > 0xD7A3) {
-                    throw new IllegalArgumentsException("이름은 한글만 가능합니다.");
-                }
-            }
-        } else {
-            throw new IllegalArgumentsException("이름은 2-10자만 가능합니다.");
-        }
+//        if (name.length() >= 2 && name.length() <= 10) {
+//            for (char ch : name.toCharArray()) {
+//                if (ch < 0xAC00 || ch > 0xD7A3) {
+//                    throw new IllegalArgumentsException("이름은 한글만 가능합니다.");
+//                }
+//            }
+//        } else {
+//            throw new IllegalArgumentsException("이름은 2-10자만 가능합니다.");
+//        }
 
         // 아이디 확인
         if (publicId.length() >= 4 && publicId.length() <= 15) {
@@ -145,7 +145,7 @@ public class AuthServiceImpl implements AuthService {
 
         // 최종 확인 후 저장
         if (userRepository.findByPublicId(publicId).isEmpty()) {
-            User user = new User(studentNumber, name, publicId, passwordEncoder.encode(password), email);
+            User user = new User(studentNumber,/* name,*/ publicId, passwordEncoder.encode(password), email);
             userRepository.save(user);
         } else {
             throw new AlreadyUsingIdException("이미 사용중인 아이디입니다.");
