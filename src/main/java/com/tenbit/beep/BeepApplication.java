@@ -14,9 +14,10 @@ public class BeepApplication {
 		SpringApplication.run(BeepApplication.class, args);
 
 //		ApplicationContext context = SpringApplication.run(BeepApplication.class, args);
-//
 //		UserRepository userRepository = context.getBean(UserRepository.class);
 //		DBService dbService = new DBServiceImpl(userRepository);
+//		dbService.resetDB();
+
 //		dbService.deleteByPublicId("student1");
 	}
 

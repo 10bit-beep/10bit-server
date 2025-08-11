@@ -7,9 +7,11 @@ import com.tenbit.beep.auth.domain.dto.SignupRequest;
 import com.tenbit.beep.auth.domain.repository.UserRepository;
 import com.tenbit.beep.auth.domain.service.AuthService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -21,9 +23,13 @@ public class AuthController {
     private final UserRepository userRepository;
 
     @PostMapping("/signup")
-    public String signup(@RequestBody SignupRequest signupRequest) {
-        authService.signup(signupRequest);
-        return "Signup success";
+    public ResponseEntity<Object> signup(@RequestBody SignupRequest signupRequest) {
+        try {
+            authService.signup(signupRequest);
+            return ResponseEntity.ok(Map.of("publicId", signupRequest.getPublicId(), "success", true));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 
     @PostMapping("/login")

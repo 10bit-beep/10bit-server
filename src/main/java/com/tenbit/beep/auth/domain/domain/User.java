@@ -31,9 +31,9 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Attendance attendance;
 
-    @Column(nullable = false, length = 10)
-    @Size(min = 2, max = 10)
-    private String name;
+//    @Column(nullable = false, length = 10)
+//    @Size(min = 2, max = 10)
+//    private String name;
 
     @Column(unique = true, nullable = false, length = 15)
     @Size(min = 4, max = 15)
@@ -47,9 +47,9 @@ public class User {
     @Email
     private String email;
 
-    public User(int studentNumber, String name, String publicId, String password, String email) {
+    public User(int studentNumber,/* String name,*/ String publicId, String password, String email) {
         this.studentNumber = studentNumber;
-        this.name = name;
+//        this.name = name;
         this.publicId = publicId;
         this.password = password;
         this.email = email;
