@@ -68,13 +68,16 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-        fetch('http://localhost:3000/login', {
+        fetch('http://localhost:8080/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'userAgent': navigator.userAgent
             },
-            body: JSON.stringify({ publicId, password }),
+            body: JSON.stringify({
+                publicId: publicId,
+                password: password
+            }),
         })
             .then((res) => res.json())
             .then((data) => {
