@@ -11,5 +11,5 @@ public interface ClassRoomRepository extends JpaRepository<ClassRoom, Long> {
 
     List<ClassRoom> findByGradeAndClassNumber(int grade, int classNumber);
 
-    List<ClassRoom> findByNameContaining(String name);
+    List<ClassRoom> findByClassNameContaining(String className);
 }

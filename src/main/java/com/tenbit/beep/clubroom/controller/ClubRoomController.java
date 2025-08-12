@@ -4,7 +4,6 @@ import com.tenbit.beep.clubroom.dto.ClubRoomRequest;
 import com.tenbit.beep.clubroom.dto.ClubRoomResponse;
 import com.tenbit.beep.clubroom.entity.ClubRoom;
 import com.tenbit.beep.clubroom.repository.ClubRoomRepository;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,22 +27,22 @@ public class ClubRoomController {
         return ResponseEntity.ok(clubRooms);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<ClubRoomResponse> getById(@PathVariable Long id) {
+    @GetMapping("/search")
+    public ResponseEntity<ClubRoomResponse> getById(@RequestParam Long id) {
         ClubRoom clubRoom = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("ClubRoom not found"));
         return ResponseEntity.ok(ClubRoomResponse.from(clubRoom));
     }
 
-    @GetMapping("/category/{category}")
-    public ResponseEntity<List<ClubRoomResponse>> getByCategory(@PathVariable String category) {
+    @GetMapping("/category")
+    public ResponseEntity<List<ClubRoomResponse>> getByCategory(@RequestParam String category) {
         List<ClubRoomResponse> clubRooms = repository.findByCategory(category).stream()
                 .map(ClubRoomResponse::from)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(clubRooms);
     }
 
-    @GetMapping("/search")
+    @GetMapping("/search-name")
     public ResponseEntity<List<ClubRoomResponse>> searchByName(@RequestParam String clubName) {
         List<ClubRoomResponse> clubRooms = repository.findByClubNameContaining(clubName).stream()
                 .map(ClubRoomResponse::from)
@@ -52,7 +51,7 @@ public class ClubRoomController {
     }
 
     @PostMapping
-    public ResponseEntity<ClubRoomResponse> create(@Valid @RequestBody ClubRoomRequest request) {
+    public ResponseEntity<ClubRoomResponse> create(@RequestBody ClubRoomRequest request) {
         ClubRoom clubRoom = ClubRoom.builder()
                 .clubName(request.getClubName())
                 .description(request.getDescription())
@@ -67,8 +66,8 @@ public class ClubRoomController {
         return ResponseEntity.status(HttpStatus.CREATED).body(ClubRoomResponse.from(savedClubRoom));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<ClubRoomResponse> update(@PathVariable Long id, @Valid @RequestBody ClubRoomRequest request) {
+    @PutMapping
+    public ResponseEntity<ClubRoomResponse> update(@RequestParam Long id, @RequestBody ClubRoomRequest request) {
         ClubRoom clubRoom = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("ClubRoom not found"));
 
@@ -84,8 +83,8 @@ public class ClubRoomController {
         return ResponseEntity.ok(ClubRoomResponse.from(updatedClubRoom));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    @DeleteMapping
+    public ResponseEntity<Void> delete(@RequestParam Long id) {
         if (!repository.existsById(id)) {
             throw new RuntimeException("ClubRoom not found");
         }

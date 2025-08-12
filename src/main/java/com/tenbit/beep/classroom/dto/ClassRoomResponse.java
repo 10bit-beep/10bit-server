@@ -1,17 +1,16 @@
 package com.tenbit.beep.classroom.dto;
 
 import com.tenbit.beep.classroom.entity.ClassRoom;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Getter
-@AllArgsConstructor
+@Setter
 public class ClassRoomResponse {
     private Long id;
     private Integer studentNumber;
-    private String name;
     private Integer grade;
     private Integer classNumber;
     private String className;
@@ -19,14 +18,14 @@ public class ClassRoomResponse {
     private LocalDateTime updatedAt;
 
     public static ClassRoomResponse from(ClassRoom room) {
-        return new ClassRoomResponse(
-                room.getId(),
-                room.getStudentNumber(),
-                room.getName(),
-                room.getGrade(),
-                room.getClassNumber(),
-                room.getClassName(),
-                room.getCreatedAt(),
-                room.getUpdatedAt());
+        ClassRoomResponse response = new ClassRoomResponse();
+        response.setId(room.getId());
+        response.setStudentNumber(room.getStudentNumber());
+        response.setGrade(room.getGrade());
+        response.setClassNumber(room.getClassNumber());
+        response.setClassName(room.getClassName());
+        response.setCreatedAt(room.getCreatedAt());
+        response.setUpdatedAt(room.getUpdatedAt());
+        return response;
     }
 }

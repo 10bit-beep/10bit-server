@@ -1,34 +1,28 @@
 package com.tenbit.beep.classroom.dto;
 
-import jakarta.validation.constraints.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
+@Setter
 public class ClassRoomRequest {
 
-    @NotNull(message = "학번은 필수입니다")
-    @Min(value = 1, message = "학번은 1 이상이어야 합니다")
     private Integer studentNumber;
-
-    @NotBlank(message = "이름은 필수입니다")
-    @Size(min = 1, max = 50, message = "이름은 1자 이상 50자 이하여야 합니다")
-    private String name;
-
-    @NotNull(message = "학년은 필수입니다")
-    @Min(value = 1, message = "학년은 1 이상이어야 합니다")
-    @Max(value = 6, message = "학년은 6 이하여야 합니다")
-    private Integer grade;
-
-    @NotNull(message = "반은 필수입니다")
-    @Min(value = 1, message = "반은 1 이상이어야 합니다")
-    @Max(value = 20, message = "반은 20 이하여야 합니다")
-    private Integer classNumber;
-
-    @NotBlank(message = "클래스명은 필수입니다")
-    @Size(min = 1, max = 100, message = "클래스명은 1자 이상 100자 이하여야 합니다")
     private String className;
+
+    // 학번을 기반으로 학년, 반, 번호를 계산하는 메서드
+    public Integer getGrade() {
+        if (studentNumber == null) return null;
+        return studentNumber / 1000; // 학번의 첫 번째 자리
+    }
+
+    public Integer getClassNumber() {
+        if (studentNumber == null) return null;
+        return (studentNumber % 1000) / 10; // 학번의 두 번째, 세 번째 자리
+    }
+
+    public Integer getStudentNumberInClass() {
+        if (studentNumber == null) return null;
+        return studentNumber % 10; // 학번의 마지막 자리
+    }
 }

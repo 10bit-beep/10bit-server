@@ -1,7 +1,6 @@
 package com.tenbit.beep.classroom.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -19,26 +18,16 @@ public class ClassRoom {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "학번은 필수입니다")
-    @Min(value = 1, message = "학번은 1 이상이어야 합니다")
+    @Column(nullable = false, unique = true)
     private Integer studentNumber; // 학번
 
-    @NotBlank(message = "이름은 필수입니다")
-    @Size(min = 1, max = 50, message = "이름은 1자 이상 50자 이하여야 합니다")
-    private String name; // 이름
-
-    @NotNull(message = "학년은 필수입니다")
-    @Min(value = 1, message = "학년은 1 이상이어야 합니다")
-    @Max(value = 6, message = "학년은 6 이하여야 합니다")
+    @Column(nullable = false)
     private Integer grade; // 학년
 
-    @NotNull(message = "반은 필수입니다")
-    @Min(value = 1, message = "반은 1 이상이어야 합니다")
-    @Max(value = 20, message = "반은 20 이하여야 합니다")
+    @Column(nullable = false)
     private Integer classNumber; // 반
 
-    @NotBlank(message = "클래스명은 필수입니다")
-    @Size(min = 1, max = 100, message = "클래스명은 1자 이상 100자 이하여야 합니다")
+    @Column(nullable = false, length = 100)
     private String className; // 예: "1학년 5반"
 
     @Column(name = "created_at")
