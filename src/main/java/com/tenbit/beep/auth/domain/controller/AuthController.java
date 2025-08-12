@@ -34,7 +34,7 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<Object> login(
-            @RequestHeader("User-Agent") String userAgent,
+            @RequestHeader("userAgent") String userAgent,
             @RequestBody LoginRequest loginRequest) {
 
         String token = authService.login(loginRequest);
