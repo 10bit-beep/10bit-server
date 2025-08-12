@@ -34,8 +34,6 @@ public class JwtFilter extends OncePerRequestFilter {
             return;
         }
 
-        System.out.println(path + ": wrong");
-
         String authHeader = request.getHeader("Authorization");
 
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
