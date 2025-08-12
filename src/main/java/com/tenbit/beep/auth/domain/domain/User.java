@@ -47,11 +47,23 @@ public class User {
     @Email
     private String email;
 
-    public User(int studentNumber,/* String name,*/ String publicId, String password, String email) {
+    @Column
+    @Min(1)
+    @Max(4)
+    private Integer classRoomNumber;
+
+    @Column
+    @Min(1)
+    @Max(4)
+    private Integer clubRoomNumber;
+
+    public User(int studentNumber, String publicId, String password, String email) {
         this.studentNumber = studentNumber;
 //        this.name = name;
         this.publicId = publicId;
         this.password = password;
         this.email = email;
+        this.classRoomNumber = null;
+        this.clubRoomNumber = null;
     }
 }

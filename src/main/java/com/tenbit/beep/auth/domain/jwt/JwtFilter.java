@@ -20,8 +20,8 @@ public class JwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String path = request.getRequestURI();
 
-        if (path.equals("/favicon.ico") || path.startsWith("/.well-known/") || path.startsWith("/auth/") ||
-                path.startsWith("/email/") ||
+        if (/*path.equals("/favicon.ico") || path.startsWith("/.well-known/") || */path.startsWith("/auth/") ||
+//                path.startsWith("/email/") ||
                 path.startsWith("/last/") ||
                 path.startsWith("/main/") ||
                 path.startsWith("/img/") ||
