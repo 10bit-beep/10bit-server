@@ -33,7 +33,7 @@ public class ClubRoom {
     @Column(nullable = false, length = 50)
     private String leaderName; // 동아리장 이름
 
-    @Column(nullable = false, unique = true, length = 20)
+    @Column(nullable = false, length = 20)
     private String leaderStudentNumber; // 동아리장 학번
 
     @Column(nullable = false, length = 50)
