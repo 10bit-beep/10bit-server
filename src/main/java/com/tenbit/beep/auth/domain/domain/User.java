@@ -63,6 +63,7 @@ public class User {
         this.publicId = publicId;
         this.password = password;
         this.email = email;
+        this.authority = null;
         this.classRoomNumber = null;
         this.clubRoomNumber = null;
     }
