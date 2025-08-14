@@ -151,7 +151,7 @@ footer {
 
     position: relative;
     display: block;
-    padding: 20px 30px;
+    padding: 20px 60px;
 }
 .check {
     margin-left: 3px;
@@ -182,30 +182,9 @@ footer {
     font-weight: bold;
 }
 
-/* .loginbox {
-    position: absolute;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 10px 190px;
-    background-color: rgb(52,99,129);
-    color: #fff;
-    border-radius: 6px;
-    border: none;
-    cursor: pointer;
-    white-space: nowrap;
-    font-size: 15px;
-} */
 
 .loginbox {
-    /* position: absolute; */
-    /* bottom: 30px; */
-    /* left: 50%; */
-    /* transform: translateX(-50%); */
-
-    /* width: 100%; */
-    /* max-width: 300px; */
-    padding: 12px 180px;
+    padding: 12px 205px;
     background-color: #5E9893;
     color: #fff;
     border-radius: 6px;
@@ -246,7 +225,7 @@ form {
 }
 .input-group label {
     font-weight: bold;
-    margin-bottom: 6px;
+    margin-bottom: 10px;
     color: #000;
     font-size: 16px;
 }
@@ -256,7 +235,7 @@ form {
     border-radius: 13px;
     border: 1.5px solid #cccccc8d;
     font-size: 16px;
-    width: 370px;
+    width: 420px;
 }
 
 .logins {
@@ -277,4 +256,113 @@ form {
 
 .logins a:hover {
     text-decoration: underline;
+}
+
+.center-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@media (max-width: 768px) {
+    .box {
+        width: 90%;
+        height: auto;
+        margin-top: 70px;
+        margin-bottom: 120px;
+        padding: 15px 20px;
+        border-radius: 20px;
+    }
+
+    .long-line {
+        width: 90%;
+        left: 5%;
+        top: 40px;
+    }
+
+    .laptop {
+        position: static;
+        width: 100%;
+        max-width: 300px;
+        margin: 20px auto 0;
+        display: block;
+    }
+
+    .checking {
+        position: static;
+        margin: 30px auto 20px;
+        display: block;
+        width: 80%;
+        max-width: 300px;
+        transform: none;
+        padding: 12px 0;
+    }
+
+    .menu {
+        gap: 30px;
+        height: 50px;
+    }
+
+    .menu1 {
+        margin: 0 10px;
+        font-size: 16px;
+    }
+
+    .top {
+        height: 50px;
+        padding: 0 10px;
+    }
+
+    .logo img {
+        height: 30px;
+        margin-top: 0;
+        margin-left: 0;
+    }
+
+    footer {
+        flex-direction: column;
+        height: auto;
+        padding: 10px 10px;
+        gap: 10px;
+        text-align: center;
+    }
+
+    .footer-text {
+        margin-left: 0;
+        gap: 3px;
+    }
+
+    .logo2 {
+        margin: 0 auto 10px;
+        width: 40px;
+    }
+}
+
+@media (max-width: 480px) {
+    .menu {
+        flex-direction: column;
+        gap: 10px;
+        height: auto;
+        padding: 10px;
+    }
+
+    .menu1 {
+        margin: 0;
+        font-size: 14px;
+    }
+
+    .box {
+        padding: 15px 15px;
+        border-radius: 15px;
+    }
+
+    .checking {
+        width: 100%;
+        max-width: none;
+    }
+
+    .laptop {
+        max-width: 100%;
+    }
 }

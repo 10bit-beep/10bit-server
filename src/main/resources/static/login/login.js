@@ -41,13 +41,13 @@
 //         }
 //     });
 // });
-
 document.addEventListener('DOMContentLoaded', function () {
     const loginForm = document.querySelector('form');
     if (!loginForm) {
         console.error('로그인 폼을 찾을 수 없습니다.');
         return;
     }
+
     const container = loginForm.parentElement;
     if (!container) {
         console.error('컨테이너 요소를 찾을 수 없습니다.');
@@ -58,6 +58,14 @@ document.addEventListener('DOMContentLoaded', function () {
     logoutButton.textContent = '로그아웃';
     logoutButton.style.display = 'none';
     container.appendChild(logoutButton);
+
+    const token = localStorage.getItem('token');
+    if (token) {
+        showLogout();
+    } else {
+        showLogin();
+    }
+
     loginForm.addEventListener('submit', function (e) {
         e.preventDefault();
 
@@ -75,10 +83,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 'Content-Type': 'application/json',
                 'userAgent': navigator.userAgent
             },
-            body: JSON.stringify({
-                publicId: publicId,
-                password: password
-            }),
+            body: JSON.stringify({ publicId, password }),
         })
             .then((res) => {
                 if (!res.ok) {
@@ -104,6 +109,12 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     });
 
+    logoutButton.addEventListener('click', () => {
+        localStorage.removeItem('token');
+        alert('로그아웃 되었습니다.');
+        showLogin();
+    });
+
     function fetchProtectedAPI() {
         const token = localStorage.getItem('token');
         if (!token) {
@@ -111,7 +122,7 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-        fetch('/auth/login', {
+        fetch('http://127.0.0.1:5500/someProtectedRoute', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
