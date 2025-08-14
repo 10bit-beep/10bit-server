@@ -4,12 +4,11 @@ body {
     padding: 0;
 }
 a {
-    color: inherit;         /* 부모 요소 글자색을 물려받음 */
-    text-decoration: none;  /* 밑줄 제거 */
+    color: inherit; /* 부모 요소 글자색을 물려받음 */
+    text-decoration: none; /* 밑줄 제거 */
 }
-
 .top {
-    background-color: #5E9893;
+    background-color: #679996;
     width: 100%;
     height: 65px;
 
@@ -25,7 +24,7 @@ a {
     font-size: 15px;
     font-weight: bold;
     margin-left: 15px;
-    color: #5E9893;
+    color: #679996;
     border: none;
     border-radius: 8px;
     cursor: pointer;
@@ -52,7 +51,7 @@ a {
 .menu1 {
     text-align: center;
     padding: 0 15px; /* 기존 패딩 유지 */
-    margin: 0 100px;  /* 좌우 간격을 더 크게 */
+    margin: 0 100px; /* 좌우 간격을 더 크게 */
     display: block;
     transition: background-color 0.3s ease;
     font-size: 18px;
@@ -75,7 +74,7 @@ a {
     border: none;
     cursor: pointer;
     font-size: 14px;
-    color: #5E9893;
+    color: #679996;
     user-select: none;
 }
 
@@ -85,7 +84,7 @@ a {
     top: 35px;
     right: 4px;
     background-color: #fff;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 4px;
     min-width: 120px;
     z-index: 1000;
@@ -106,7 +105,7 @@ footer {
     left: 0;
     width: 100%;
     height: 87px;
-    color: #5E9893;
+    color: #679996;
     background-color: #fff;
     display: flex;
     justify-content: space-between; /* 좌우로 공간 배분 */
@@ -135,11 +134,11 @@ footer {
     width: 50px;
 }
 .box {
-    width: 450px;
+    width: 600px;
     height: 400px;
     background-color: #fff;
     margin: 0 auto;
-    /* font-weight: bold; */
+    font-weight: bold;
     margin-top: 65px;
     margin-bottom: 100px;
     /* display: flex; */
@@ -151,7 +150,7 @@ footer {
 
     position: relative;
     display: block;
-    padding: 20px 60px;
+    padding: 20px 30px;
 }
 .check {
     margin-left: 3px;
@@ -168,101 +167,24 @@ footer {
     border-top: 1px solid #a5a5a5e0;
     margin-left: 0px;
 }
+.laptop {
+    position: absolute;
+    top: 100px;
+    right: 140px;
+    width: 380px;
+}
 .checking {
     position: absolute;
     bottom: 30px;
     left: 50%;
-    transform: translateX(-50%);  /* 정확한 중앙 정렬 */
+    transform: translateX(-50%); /* 정확한 중앙 정렬 */
     padding: 12px 70px;
-    background-color: #5E9893;
+    background-color: #ef5350;
     color: #fff;
     border-radius: 8px;
     border: none;
     cursor: pointer;
     font-weight: bold;
-}
-
-
-.loginbox {
-    padding: 12px 205px;
-    background-color: #5E9893;
-    color: #fff;
-    border-radius: 6px;
-    border: none;
-    cursor: pointer;
-    white-space: nowrap;
-    font-size: 15px;
-    align-self: center; /* 중앙 정렬 */
-    margin-top: 30px;
-}
-
-
-.login {
-    color: #5E9893;
-    font-size: 33px;
-    font-family:'나눔고딕';
-    font-weight: bold;
-    display: flex;
-    justify-content: center;
-    margin-top: 13px;
-    margin-bottom: 15px;  /* 이걸 줄여 간격 좁힘 */
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0px;
-    margin-bottom: 30px;
-    margin-top: 0px;  /* 기본 없으면 추가 */
-}
-
-/* 로그인 입력폼 스타일 */
-.input-group {
-    margin: 10px 0;
-    display: flex;
-    flex-direction: column;
-}
-.input-group label {
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #000;
-    font-size: 16px;
-}
-.input-group input {
-    height: 35px;
-    padding: 6px 15px;
-    border-radius: 13px;
-    border: 1.5px solid #cccccc8d;
-    font-size: 16px;
-    width: 420px;
-}
-
-.logins {
-    margin-top: 20px;
-    text-align: center;
-    font-size: 14px;
-    /* color: rgb(52,99,129); */
-    color: #b9b9b9;
-}
-.logins a {
-    color: #b9b9b9;
-    text-decoration: none;
-    margin: 0 8px;
-    font-weight: normal !important; /* 볼드 강제 제거 */
-    cursor: pointer;
-}
-
-
-.logins a:hover {
-    text-decoration: underline;
-}
-
-.center-wrapper {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
 }
 
 @media (max-width: 768px) {
@@ -344,7 +266,7 @@ form {
         flex-direction: column;
         gap: 10px;
         height: auto;
-        padding: 10px;
+        padding: 10px 0;
     }
 
     .menu1 {
@@ -363,6 +285,43 @@ form {
     }
 
     .laptop {
+        max-width: 100%;
+    }
+}
+@media (max-width: 480px) {
+    .box {
+        width: 90%;
+        max-width: 320px;
+        height: auto;
+        padding: 15px 15px;
+        border-radius: 15px;
+    }
+}
+
+.box {
+    width: 450px;
+    height: 600px;
+    background-color: #fff;
+    margin: 65px auto 100px;
+    border-radius: 25px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    padding: 20px 30px;
+    box-sizing: border-box;
+    display: block;
+}
+
+/* 480px 이하에서만 적용*/
+@media (max-width: 480px) {
+    .box {
+        width: 90%;
+        max-width: 320px;
+        height: auto;
+        padding: 15px 15px;
+        border-radius: 15px;
+    }
+
+    .input-group input {
+        width: 100%;
         max-width: 100%;
     }
 }

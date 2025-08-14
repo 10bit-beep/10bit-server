@@ -33,8 +33,8 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(
-            @RequestHeader("User-Agent") String userAgent,
+    public ResponseEntity<Object> login(
+            @RequestHeader("userAgent") String userAgent,
             @RequestBody LoginRequest loginRequest) {
 
         String token = authService.login(loginRequest);
@@ -53,6 +53,6 @@ public class AuthController {
             });
         }
 
-        return ResponseEntity.ok(token);
+        return ResponseEntity.ok(Map.of("token", token));
     }
 }

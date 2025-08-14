@@ -18,7 +18,7 @@ public class BeepApplication {
 //		DBService dbService = new DBServiceImpl(userRepository);
 //		dbService.resetDB();
 
-//		dbService.deleteByPublicId("student1");
+//		dbService.deleteByPublicId("");
 	}
 
 }

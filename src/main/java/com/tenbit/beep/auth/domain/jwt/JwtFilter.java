@@ -21,7 +21,7 @@ public class JwtFilter extends OncePerRequestFilter {
         String path = request.getRequestURI();
 
         if (path.equals("/favicon.ico") || path.startsWith("/.well-known/") || path.startsWith("/auth/") ||
-                path.startsWith("/email/") ||
+//                path.startsWith("/email/") ||
                 path.startsWith("/last/") ||
                 path.startsWith("/main/") ||
                 path.startsWith("/img/") ||
@@ -33,8 +33,6 @@ public class JwtFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
-
-        System.out.println(path + ": wrong");
 
         String authHeader = request.getHeader("Authorization");
 

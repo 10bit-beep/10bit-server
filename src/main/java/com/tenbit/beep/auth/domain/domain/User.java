@@ -1,7 +1,7 @@
 package com.tenbit.beep.auth.domain.domain;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
+        import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
@@ -47,6 +47,16 @@ public class User {
     @Email
     private String email;
 
+    @Column
+    @Min(1)
+    @Max(4)
+    private Integer classRoomNumber;
+
+    @Column
+    @Min(1)
+    @Max(4)
+    private Integer clubRoomNumber;
+
     public User(int studentNumber,/* String name,*/ String publicId, String password, String email) {
         this.studentNumber = studentNumber;
 //        this.name = name;
@@ -54,5 +64,8 @@ public class User {
         this.password = password;
         this.email = email;
         this.attendance = Attendance.FALSE;
+        this.authority = null;
+        this.classRoomNumber = null;
+        this.clubRoomNumber = null;
     }
 }
