@@ -23,8 +23,8 @@ public class AttendanceController {
 
     @PostMapping("/reset")
     public ResponseEntity<String> resetAttendance() {
-        attendanceService.resetAllAttendance();
-        return ResponseEntity.ok("초기화 완료");
+        attendanceService.CheckOutAttendance();
+        return ResponseEntity.ok("퇴실 완료");
     }
 
 }
