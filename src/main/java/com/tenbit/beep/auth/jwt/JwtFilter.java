@@ -18,15 +18,19 @@ public class JwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String path = request.getRequestURI();
 
-        if (path.equals("/favicon.ico") || path.startsWith("/.well-known/") || path.startsWith("/auth/") ||
+        if (path.equals("/favicon.ico") ||
+                path.startsWith("/.well-known/") ||
+                path.startsWith("/auth/") ||
 //                path.startsWith("/email/") ||
                 path.startsWith("/last/") ||
                 path.startsWith("/main/") ||
                 path.startsWith("/img/") ||
                 path.startsWith("/login/") ||
                 path.startsWith("/logout/") ||
+                path.startsWith("/inquiry/") ||
                 path.startsWith("/room/") ||
                 path.startsWith("/class/") ||
+                path.startsWith("/classroom/") ||
                 path.startsWith("/signup/")) {
             filterChain.doFilter(request, response);
             return;
