@@ -12,13 +12,14 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
 public class ClassRoom extends User {
 
-    @Column
-    @Min(1)
-    @Max(10)
+    @Column(nullable = true)
     private String classRoomName;
+
+    public ClassRoom() {
+        this.classRoomName = "";
+    }
 
     public ClassRoom(String classRoomName) {
         super();

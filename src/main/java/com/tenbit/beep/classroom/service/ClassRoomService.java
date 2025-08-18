@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface ClassRoomService {
 
-    List<ClassRoom> lookUpStudentsByClassRoom(LookUpStudentsRequest lookUpStudentsRequest);
+//    List<ClassRoom> lookUpStudentsByClassRoom(LookUpStudentsRequest lookUpStudentsRequest);
     List<StudentInfoResponse> lookUpStudentsByPrimaryClassRoom(LookUpStudentsRequest lookUpStudentsRequest);
 }
