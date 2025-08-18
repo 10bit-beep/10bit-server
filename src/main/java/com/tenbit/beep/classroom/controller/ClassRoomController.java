@@ -25,6 +25,8 @@ public class ClassRoomController {
 
         List<StudentInfoResponse> students = classRoomService.lookUpStudentsByPrimaryClassRoom(lookUpStudentsRequest);
 
+//        System.out.println(students);
+
         return ResponseEntity.ok(students);
     }
 }

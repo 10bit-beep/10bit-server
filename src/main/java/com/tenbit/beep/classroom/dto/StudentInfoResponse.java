@@ -5,10 +5,12 @@ import com.tenbit.beep.auth.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
 @AllArgsConstructor
+@ToString
 public class StudentInfoResponse {
 
     private int studentNumber;

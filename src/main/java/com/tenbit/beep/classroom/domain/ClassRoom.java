@@ -8,18 +8,16 @@ import jakarta.validation.constraints.Min;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 public class ClassRoom extends User {
 
     @Column(nullable = true)
     private String classRoomName;
-
-    public ClassRoom() {
-        this.classRoomName = "";
-    }
 
     public ClassRoom(String classRoomName) {
         super();
