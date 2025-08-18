@@ -5,6 +5,7 @@ import com.tenbit.beep.classroom.domain.ClassRoom;
 import com.tenbit.beep.classroom.dto.LookUpStudentsRequest;
 import com.tenbit.beep.classroom.repository.ClassRoomRespository;
 import com.tenbit.beep.classroom.service.ClassRoomService;
+import com.tenbit.beep.common.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +33,10 @@ public class ClassRoomServiceImpl implements ClassRoomService {
     public List<User> lookUpStudentsByPrimaryClassRoom(LookUpStudentsRequest lookUpStudentsRequest) {
 
         List<User> students = classRoomRespository.findByPrimaryClassRoomName(lookUpStudentsRequest.getClassRoomName());
+
+        if (students.isEmpty()) {
+            throw new UserNotFoundException("학생이 조회 되지 않았습니다.");
+        }
 
         return students;
     }
