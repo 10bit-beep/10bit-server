@@ -18,11 +18,11 @@ public class ClassRoom extends User {
     @Column
     @Min(1)
     @Max(10)
-    private int classRoomNumber;
+    private String classRoomName;
 
-    public ClassRoom(int classRoomNumber) {
+    public ClassRoom(String classRoomName) {
         super();
 
-        this.classRoomNumber = classRoomNumber;
+        this.classRoomName = classRoomName;
     }
 }
