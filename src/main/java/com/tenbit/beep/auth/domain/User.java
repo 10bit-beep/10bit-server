@@ -54,10 +54,10 @@ public class User {
 //    private Integer clubRoomNumber;
 
     @Column(nullable = false)
-    private String classRoomName;
+    private String primaryClassRoomName;
 
     @Column
-    private String clubRoomName;
+    private String primaryClubRoomName;
 
     public User(int studentNumber, String publicId, String password, String email) {
         this.studentNumber = studentNumber;
@@ -69,7 +69,7 @@ public class User {
         this.authority = Authority.STUDENT;
 //        this.clubRoomNumber = null;
 
-        this.classRoomName = String.valueOf(studentNumber / 1000) + "학년 " + String.valueOf(studentNumber / 100 % 10) + "반";
-        this.clubRoomName = null;
+        this.primaryClassRoomName = String.valueOf(studentNumber / 1000) + "학년 " + String.valueOf(studentNumber / 100 % 10) + "반";
+        this.primaryClubRoomName = null;
     }
 }
