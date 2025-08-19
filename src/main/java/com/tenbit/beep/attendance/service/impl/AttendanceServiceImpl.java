@@ -19,11 +19,26 @@ public class AttendanceServiceImpl implements AttendanceService {
     private final UserRepository userRepository;
     private final ThreadPoolTaskScheduler taskScheduler;
 
-
     @Override
     public void markAttendance(String publicId) {
+        String nfcTag = getNfcTagFromReader();
+
         User user = userRepository.findByPublicId(publicId)
                 .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없음."));
+
+        // classroom
+        if (nfcTag.matches("^C\\d+_\\d+$")) {
+            String[] classRoom = nfcTag.substring(1).split("_");
+            String classRoomName = classRoom[0] + "학년 " + classRoom[1] + "반";
+            user.setPrimaryClassRoomName(classRoomName);
+        }  // clubroom
+        else if (nfcTag.matches("^LAB\\d+(_\\d+)?$") || nfcTag.matches("^PROJECT\\d+$")){
+            user.setPrimaryClubRoomName(nfcTag);
+        }
+        else {
+            throw new InvalidNfcTagException("유효하지 않은 NFC 태그. " + nfcTag);
+        }
+
         user.setAttendance(Attendance.TRUE);
         userRepository.save(user);
 
@@ -44,5 +59,10 @@ public class AttendanceServiceImpl implements AttendanceService {
         }
         userRepository.saveAll(users);
 
+    }
+
+    private String getNfcTagFromReader() {
+        // 임시값
+        return "C1_1";
     }
 }
