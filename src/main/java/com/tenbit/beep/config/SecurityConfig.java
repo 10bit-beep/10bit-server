@@ -46,7 +46,6 @@ public class SecurityConfig {
                                 "/class/**",
                                 "/room/**",
                                 "/auth/**",
-//                                "/email/**",
                                 "/favicon.ico"
                         ).permitAll()
                         .anyRequest().authenticated()

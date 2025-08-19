@@ -5,9 +5,12 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Collections;
 
 @RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
@@ -27,10 +30,10 @@ public class JwtFilter extends OncePerRequestFilter {
                 path.startsWith("/img/") ||
                 path.startsWith("/login/") ||
                 path.startsWith("/logout/") ||
-                path.startsWith("/inquiry/") ||
-                path.startsWith("/room/") ||
-                path.startsWith("/class/") ||
-                path.startsWith("/classroom/") ||
+//                path.startsWith("/inquiry/") ||
+//                path.startsWith("/room/") ||
+//                path.startsWith("/class/") ||
+//                path.startsWith("/classroom/") ||
                 path.startsWith("/signup/")) {
             filterChain.doFilter(request, response);
             return;
@@ -42,7 +45,7 @@ public class JwtFilter extends OncePerRequestFilter {
             String token = authHeader.substring(7);
             try {
                 jwtAuth.validateToken(token);
-                String innerId = jwtAuth.innerIdFromToken(token);
+                String userId = jwtAuth.innerIdFromToken(token);
             } catch (Exception e) {
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 response.getWriter().write("Invalid JWT token");
