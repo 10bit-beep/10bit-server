@@ -2,6 +2,7 @@ package com.tenbit.beep.common.handler;
 
 import com.tenbit.beep.common.exception.AlreadyUsingIdException;
 import com.tenbit.beep.common.exception.IllegalArgumentsException;
+import com.tenbit.beep.common.exception.InvalidNfcTagException;
 import com.tenbit.beep.common.exception.ValueMissingException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,11 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ValueMissingException.class)
     public ResponseEntity<String> handleValueMissing(ValueMissingException e) {
+        return ResponseEntity.badRequest().body(e.getMessage());
+    }
+
+    @ExceptionHandler(InvalidNfcTagException.class)
+    public ResponseEntity<String> handleInvalidNfcTag(InvalidNfcTagException e) {
         return ResponseEntity.badRequest().body(e.getMessage());
     }
 }

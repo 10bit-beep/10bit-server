@@ -5,6 +5,7 @@ import com.tenbit.beep.attendance.service.AttendanceService;
 import com.tenbit.beep.attendance.domain.Attendance;
 import com.tenbit.beep.auth.domain.User;
 import com.tenbit.beep.auth.repository.UserRepository;
+import com.tenbit.beep.common.exception.InvalidNfcTagException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.stereotype.Service;
