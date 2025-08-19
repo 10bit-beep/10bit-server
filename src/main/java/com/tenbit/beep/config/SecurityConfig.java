@@ -36,6 +36,7 @@ public class SecurityConfig {
                                 "/",
                                 "/attendance/**",
                                 "/classroom/**",
+                                "/clubroom/**",
                                 "/last/**",
                                 "/main/**",
                                 "/img/**",
@@ -46,7 +47,6 @@ public class SecurityConfig {
                                 "/class/**",
                                 "/room/**",
                                 "/auth/**",
-//                                "/email/**",
                                 "/favicon.ico"
                         ).permitAll()
                         .anyRequest().authenticated()

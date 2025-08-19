@@ -1,8 +1,9 @@
-package com.tenbit.beep.classroom.controller;
+package com.tenbit.beep.clubroom.controller;
 
-import com.tenbit.beep.classroom.dto.LookUpStudentsByClassRequest;
+import com.tenbit.beep.auth.domain.User;
+import com.tenbit.beep.clubroom.dto.LookUpStudentsByClubRequest;
+import com.tenbit.beep.clubroom.service.ClubRoomService;
 import com.tenbit.beep.common.dto.StudentInfoResponse;
-import com.tenbit.beep.classroom.service.ClassRoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,16 +15,16 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/classroom")
-public class ClassRoomController {
+@RequestMapping("/clubroom")
+public class ClubRoomController {
 
-    private final ClassRoomService classRoomService;
+    private final ClubRoomService clubRoomService;
 
     @PostMapping("/lookup")
     public ResponseEntity<List<StudentInfoResponse>> lookup(
-            @RequestBody LookUpStudentsByClassRequest lookUpStudentsRequest) {
+            @RequestBody LookUpStudentsByClubRequest lookUpStudentsRequest) {
 
-        List<StudentInfoResponse> students = classRoomService.lookUpStudentsByPrimaryClassRoom(lookUpStudentsRequest);
+        List<StudentInfoResponse> students = clubRoomService.lookUpStudentsByPrimaryClubRoom(lookUpStudentsRequest);
 
         return ResponseEntity.ok(students);
     }

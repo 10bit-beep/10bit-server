@@ -1,4 +1,4 @@
-package com.tenbit.beep.classroom.domain;
+package com.tenbit.beep.clubroom.domain;
 
 import com.tenbit.beep.auth.domain.User;
 import jakarta.persistence.Column;
@@ -11,14 +11,14 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ClassRoom extends User {
+public class ClubRoom extends User {
 
     @Column(nullable = true)
-    private String classRoomName;
+    private String clubRoomName;
 
-    public ClassRoom(String classRoomName) {
+    public ClubRoom(String clubRoomName) {
         super();
 
-        this.classRoomName = classRoomName;
+        this.clubRoomName = clubRoomName;
     }
 }
