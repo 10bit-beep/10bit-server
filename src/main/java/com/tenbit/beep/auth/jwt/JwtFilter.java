@@ -24,16 +24,17 @@ public class JwtFilter extends OncePerRequestFilter {
         if (path.equals("/favicon.ico") ||
                 path.startsWith("/.well-known/") ||
                 path.startsWith("/auth/") ||
-//                path.startsWith("/email/") ||
+                path.startsWith("/email/") ||
                 path.startsWith("/last/") ||
                 path.startsWith("/main/") ||
                 path.startsWith("/img/") ||
                 path.startsWith("/login/") ||
                 path.startsWith("/logout/") ||
-//                path.startsWith("/inquiry/") ||
-//                path.startsWith("/room/") ||
-//                path.startsWith("/class/") ||
-//                path.startsWith("/classroom/") ||
+                path.startsWith("/inquiry/") ||
+                path.startsWith("/room/") ||
+                path.startsWith("/class/") ||
+                path.startsWith("/classroom/") ||
+                path.startsWith("/clubroom/") ||
                 path.startsWith("/signup/")) {
             filterChain.doFilter(request, response);
             return;
