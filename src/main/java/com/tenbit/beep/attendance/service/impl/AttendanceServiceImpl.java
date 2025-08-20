@@ -34,7 +34,32 @@ public class AttendanceServiceImpl implements AttendanceService {
             user.setPrimaryClassRoomName(classRoomName);
         }  // clubroom
         else if (nfcTag.matches("^LAB\\d+(_\\d+)?$") || nfcTag.matches("^PROJECT\\d+$")){
-            user.setPrimaryClubRoomName(nfcTag);
+            switch (nfcTag) {
+                case "PROJECT4":
+                    user.setPrimaryClubRoomName("Chatty");
+                    break;
+                case "PROJECT5":
+                    user.setPrimaryClubRoomName("모디");
+                    break;
+                case "PROJECT6":
+                    user.setPrimaryClubRoomName("CNS");
+                    break;
+                case "LAB6_7":
+                    user.setPrimaryClubRoomName("두카미");
+                    break;
+                case "LAB10_11":
+                    user.setPrimaryClubRoomName("Louter");
+                    break;
+                case "LAB17_18":
+                    user.setPrimaryClubRoomName("삼디");
+                    break;
+                case "LAB19_20":
+                    user.setPrimaryClubRoomName("B1ND");
+                    break;
+                case "LAB21_22":
+                    user.setPrimaryClubRoomName("ALT");
+                    break;
+            }
         }
         else {
             throw new InvalidNfcTagException("유효하지 않은 NFC 태그. " + nfcTag);
