@@ -57,7 +57,7 @@ public class AttendanceServiceImpl implements AttendanceService {
                     user.setPrimaryClubRoomName("B1ND");
                     break;
                 case "LAB21_22":
-                    user.setPrimaryClubRoomName("ALT");
+                    user.setPrimaryClubRoomName("Alt");
                     break;
             }
         }
