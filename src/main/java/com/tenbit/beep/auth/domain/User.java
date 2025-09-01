@@ -70,6 +70,6 @@ public class User {
 //        this.clubRoomNumber = null;
 
         this.primaryClassRoomName = String.valueOf(studentNumber / 1000) + "학년 " + String.valueOf(studentNumber / 100 % 10) + "반";
-        this.primaryClubRoomName = null;
+        this.primaryClubRoomName = "CNS";
     }
 }

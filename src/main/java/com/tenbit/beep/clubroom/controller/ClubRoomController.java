@@ -1,6 +1,5 @@
 package com.tenbit.beep.clubroom.controller;
 
-import com.tenbit.beep.auth.domain.User;
 import com.tenbit.beep.clubroom.dto.LookUpStudentsByClubRequest;
 import com.tenbit.beep.clubroom.service.ClubRoomService;
 import com.tenbit.beep.common.dto.StudentInfoResponse;

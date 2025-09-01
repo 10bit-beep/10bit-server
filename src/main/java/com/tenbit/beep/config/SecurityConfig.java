@@ -49,6 +49,7 @@ public class SecurityConfig {
                                 "/auth/**",
                                 "/favicon.ico"
                         ).permitAll()
+                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/api-docs").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session ->
