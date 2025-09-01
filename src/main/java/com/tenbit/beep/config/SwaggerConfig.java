@@ -17,7 +17,7 @@ public class SwaggerConfig {
                 .info(new Info().title("Beep API")
                         .title("Beep API"))
                 .addSecurityItem(new SecurityRequirement().addList("Authorization"))
-                .components(new Components().addSecuritySchemes("Authorization", 
+                .components(new Components().addSecuritySchemes("Authorization",
                         new SecurityScheme()
                                 .type(SecurityScheme.Type.HTTP)
                                 .scheme("Bearer")
