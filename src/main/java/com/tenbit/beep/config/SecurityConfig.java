@@ -32,23 +32,14 @@ public class SecurityConfig {
                 .formLogin(form -> form.disable())
                 .httpBasic(httpBasic -> httpBasic.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(
-                                "/",
-                                "/attendance/**",
-                                "/classroom/**",
-                                "/clubroom/**",
-                                "/last/**",
-                                "/main/**",
-                                "/img/**",
-                                "/login/**",
-                                "/logout/**",
-                                "/signup/**",
-                                "/inquiry/**",
-                                "/class/**",
-                                "/room/**",
-                                "/auth/**",
-                                "/favicon.ico"
-                        ).permitAll()
+                        .requestMatchers("/favicon.ico").permitAll()
+                        // 기본 경로
+                        .requestMatchers("/", "/auth/**", "/classroom/**", "clubroom/**").permitAll()
+                        // 출석
+                        .requestMatchers("/attendance/**").permitAll()
+                        // 웹 코드
+                        .requestMatchers("/last/**", "/img/**", "/main/**", "/inquiry/**", "/room/**", "/class/**").permitAll()
+                        // 스웨거
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/api-docs").permitAll()
                         .anyRequest().authenticated()
                 )
