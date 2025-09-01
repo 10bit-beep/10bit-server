@@ -2,7 +2,7 @@ package com.tenbit.beep.clubroom.controller;
 
 import com.tenbit.beep.clubroom.dto.LookUpStudentsByClubRequest;
 import com.tenbit.beep.clubroom.service.ClubRoomService;
-import com.tenbit.beep.common.dto.StudentInfoResponse;
+import com.tenbit.beep.classroom.dto.StudentInfoResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

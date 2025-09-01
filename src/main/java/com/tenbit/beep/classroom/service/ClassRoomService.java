@@ -1,7 +1,7 @@
 package com.tenbit.beep.classroom.service;
 
 import com.tenbit.beep.classroom.dto.LookUpStudentsByClassRequest;
-import com.tenbit.beep.common.dto.StudentInfoResponse;
+import com.tenbit.beep.classroom.dto.StudentInfoResponse;
 
 import java.util.List;
 
