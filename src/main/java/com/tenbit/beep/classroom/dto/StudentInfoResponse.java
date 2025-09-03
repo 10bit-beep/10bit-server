@@ -1,4 +1,4 @@
-package com.tenbit.beep.common.dto;
+package com.tenbit.beep.classroom.dto;
 
 import com.tenbit.beep.attendance.domain.Attendance;
 import com.tenbit.beep.auth.domain.User;

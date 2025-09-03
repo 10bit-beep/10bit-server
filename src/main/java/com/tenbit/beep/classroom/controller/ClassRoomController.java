@@ -1,7 +1,7 @@
 package com.tenbit.beep.classroom.controller;
 
 import com.tenbit.beep.classroom.dto.LookUpStudentsByClassRequest;
-import com.tenbit.beep.common.dto.StudentInfoResponse;
+import com.tenbit.beep.classroom.dto.StudentInfoResponse;
 import com.tenbit.beep.classroom.service.ClassRoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

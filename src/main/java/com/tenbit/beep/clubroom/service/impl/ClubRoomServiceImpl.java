@@ -1,11 +1,10 @@
 package com.tenbit.beep.clubroom.service.impl;
 
 import com.tenbit.beep.auth.domain.User;
-import com.tenbit.beep.clubroom.domain.ClubRoom;
 import com.tenbit.beep.clubroom.dto.LookUpStudentsByClubRequest;
 import com.tenbit.beep.clubroom.repository.ClubRoomRepository;
 import com.tenbit.beep.clubroom.service.ClubRoomService;
-import com.tenbit.beep.common.dto.StudentInfoResponse;
+import com.tenbit.beep.classroom.dto.StudentInfoResponse;
 import com.tenbit.beep.common.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -36,6 +35,7 @@ public class ClubRoomServiceImpl implements ClubRoomService {
 
         if (students.isEmpty()) {
 
+            System.out.println(lookUpStudentsRequest.getClubRoomName());
             throw new UserNotFoundException("학생이 조회 되지 않았습니다.");
         }
 
