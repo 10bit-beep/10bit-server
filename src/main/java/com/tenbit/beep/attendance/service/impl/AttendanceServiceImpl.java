@@ -21,7 +21,7 @@ public class AttendanceServiceImpl implements AttendanceService {
     public void markAttendance(String publicId) {
         User user = userRepository.findByPublicId(publicId)
                 .orElseThrow(() -> new IllegalArgumentException("사용자 찾을 수 없음."));
-        user.setAttendance(Attendance.TRUE);
+        user.setAttendance(Attendance.ATTEND);
         userRepository.save(user);
     }
 
@@ -29,7 +29,7 @@ public class AttendanceServiceImpl implements AttendanceService {
     public void CheckOutAttendance() {
         List<User> users = userRepository.findAll();
         for (User user : users) {
-            user.setAttendance(Attendance.FALSE);
+            user.setAttendance(Attendance.ABSENT);
         }
         userRepository.saveAll(users);
 
