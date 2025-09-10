@@ -1,11 +1,6 @@
 package com.tenbit.beep.auth.domain;
 
-import com.tenbit.beep.attendance.domain.Attendance;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

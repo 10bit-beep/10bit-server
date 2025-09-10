@@ -2,7 +2,7 @@ package com.tenbit.beep.attendance.service.impl;
 
 
 import com.tenbit.beep.attendance.service.AttendanceService;
-import com.tenbit.beep.attendance.domain.Attendance;
+import com.tenbit.beep.auth.domain.Attendance;
 import com.tenbit.beep.auth.domain.User;
 import com.tenbit.beep.auth.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
