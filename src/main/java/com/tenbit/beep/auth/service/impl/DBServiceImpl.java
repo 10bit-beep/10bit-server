@@ -18,12 +18,6 @@ public class DBServiceImpl implements DBService {
         userRepository.deleteAll();
     }
 
-//    @Override
-//    @Transactional
-//    public void deleteByName(String name) {
-//        userRepository.deleteByName(name);
-//    }
-
     @Override
     @Transactional
     public void deleteByPublicId(String publicId) {

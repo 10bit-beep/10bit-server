@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+// 테이블 명세서 설명 참고
 @Entity
 @Getter
 @Setter
@@ -40,10 +41,16 @@ public class User {
     @Column(name = "status", nullable = false)
     private Attendance attendance;
 
-    public User(int studentNumber, String publicId, String password, String email) {
+    // 계정 생성시 이용
+    public User(int studentNumber, String publicId, String password, String email, String club) {
         this.studentNumber = studentNumber;
         this.publicId = publicId;
         this.password = password;
         this.email = email;
+        this.club = club;
+
+        // 기본값 설정, NULL 방지
+        this.authority = Authority.STUDENT;
+        this.attendance = Attendance.ATTEND;
     }
 }

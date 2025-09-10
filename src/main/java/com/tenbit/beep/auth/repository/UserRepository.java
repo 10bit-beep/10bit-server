@@ -11,7 +11,10 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
+    // 유저 조회 함수
     Optional<User> findByPublicId(String publicId);
+
+    // 디비 관련 함수
     @Transactional
     void deleteByInnerId(Long innerId);
     @Transactional

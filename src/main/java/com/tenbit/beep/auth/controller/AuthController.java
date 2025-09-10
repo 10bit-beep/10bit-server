@@ -19,9 +19,12 @@ import java.util.Optional;
 @RequestMapping("/auth")
 public class AuthController {
 
+    // login, signup 함수 가져옴
     private final AuthService authService;
+    // Jpa 함수 가져옴
     private final UserRepository userRepository;
 
+    // 회원가입
     @PostMapping("/signup")
     public ResponseEntity<Object> signup(@RequestBody SignupRequest signupRequest) {
         try {
@@ -32,9 +35,10 @@ public class AuthController {
         }
     }
 
+    // 로그인
     @PostMapping("/login")
     public ResponseEntity<Object> login(
-            @RequestHeader("userAgent") String userAgent,
+            @RequestHeader("userAgent") String userAgent, // 웹, 앱 구분하는 부분 받아옴
             @RequestBody LoginRequest loginRequest) {
 
         String token = authService.login(loginRequest);

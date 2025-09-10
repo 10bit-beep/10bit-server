@@ -3,6 +3,7 @@ package com.tenbit.beep.auth.service.impl;
 import com.tenbit.beep.auth.domain.User;
 import com.tenbit.beep.auth.dto.LoginRequest;
 import com.tenbit.beep.auth.dto.SignupRequest;
+import com.tenbit.beep.clubroom.repository.ClubRoomRepository;
 import com.tenbit.beep.common.exception.AlreadyUsingIdException;
 import com.tenbit.beep.common.exception.IllegalArgumentsException;
 import com.tenbit.beep.common.exception.UserNotFoundException;
@@ -30,14 +31,15 @@ public class AuthServiceImpl implements AuthService {
             "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$"
     );
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final ClubRoomRepository clubRoomRepository;
 
     @Override
     public void signup(SignupRequest signupRequest) {
         int studentNumber = signupRequest.getStudentNumber();
-//        String name = signupRequest.getName();
         String publicId = signupRequest.getPublicId();
         String password = signupRequest.getPassword();
         String email = signupRequest.getEmail();
+        String club = signupRequest.getClub();
 
         // null값 확인
         if (!(publicId != null && password != null && email != null)) {
@@ -59,17 +61,6 @@ public class AuthServiceImpl implements AuthService {
                 throw new IllegalArgumentsException("올바르지 않은 학번입니다.");
             }
         }
-
-        // 이름 확인
-//        if (name.length() >= 2 && name.length() <= 10) {
-//            for (char ch : name.toCharArray()) {
-//                if (ch < 0xAC00 || ch > 0xD7A3) {
-//                    throw new IllegalArgumentsException("이름은 한글만 가능합니다.");
-//                }
-//            }
-//        } else {
-//            throw new IllegalArgumentsException("이름은 2-10자만 가능합니다.");
-//        }
 
         // 아이디 확인
         if (publicId.length() >= 4 && publicId.length() <= 15) {
@@ -145,7 +136,7 @@ public class AuthServiceImpl implements AuthService {
 
         // 최종 확인 후 저장
         if (userRepository.findByPublicId(publicId).isEmpty()) {
-            User user = new User(studentNumber,/* name,*/ publicId, passwordEncoder.encode(password), email);
+            User user = new User(studentNumber, publicId, passwordEncoder.encode(password), email, club);
             userRepository.save(user);
         } else {
             throw new AlreadyUsingIdException("이미 사용중인 아이디입니다.");
