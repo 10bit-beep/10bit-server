@@ -27,7 +27,6 @@ public class AuthController {
     // 회원가입
     @PostMapping("/signup")
     public ResponseEntity<Object> signup(@RequestBody SignupRequest signupRequest) {
-
         authService.signup(signupRequest);
         return ResponseEntity.ok(Map.of("publicId", signupRequest.getPublicId(), "success", true));
     }
