@@ -14,62 +14,32 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@Table(name = "users")
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "inner_id")
     private Long innerId;
 
-    @Column(nullable = false)
-    @Min(0)
-    @Max(4000)
-    // 선생님은 1000, 사실상 가비지값 넣어주는거
-    private int studentNumber;
-
-    @Enumerated(EnumType.STRING)
-    private Authority authority;
-
-    @Enumerated(EnumType.STRING)
-    private Attendance attendance;
-
-//    @Column(nullable = false, length = 10)
-//    @Size(min = 2, max = 10)
-//    private String name;
-
-    @Column(unique = true, nullable = false, length = 15)
-    @Size(min = 4, max = 15)
+    @Column(name = "public_id")
     private String publicId;
 
-    @Column(nullable = false, length = 255)
-    @Size(min = 8, max = 255)
+    @Column(name = "pw")
     private String password;
 
-    @Column(unique = true, nullable = false)
-    @Email
+    @Column(name = "stu_num")
+    private Integer studentNumber;
+
+    @Column(name = "authority")
+    private Authority authority;
+
+    @Column(name = "email")
     private String email;
 
-//    @Column
-//    @Min(1)
-//    @Max(4)
-//    private Integer clubRoomNumber;
-
-    @Column(nullable = false)
-    private String primaryClassRoomName;
-
-    @Column
-    private String primaryClubRoomName;
+    @Column(name = "club")
+    private String club;
 
     public User(int studentNumber, String publicId, String password, String email) {
-        this.studentNumber = studentNumber;
-//        this.name = name;
-        this.publicId = publicId;
-        this.password = password;
-        this.email = email;
-        this.attendance = Attendance.FALSE;
-        this.authority = Authority.STUDENT;
-//        this.clubRoomNumber = null;
 
-        this.primaryClassRoomName = String.valueOf(studentNumber / 1000) + "학년 " + String.valueOf(studentNumber / 100 % 10) + "반";
-        this.primaryClubRoomName = "CNS";
     }
 }
