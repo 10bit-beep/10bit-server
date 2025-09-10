@@ -27,13 +27,12 @@ public class AuthServiceImpl implements AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
 
-    private static final Pattern EMAIL_PATTERN = Pattern.compile(
-            "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$"
-    );
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @Override
     public void signup(SignupRequest signupRequest) {
+        // 웹에서 1차 검사 진행한 값을 가져옴
+
         // dto 값 추출
         int studentNumber = signupRequest.getStudentNumber();
         String publicId = signupRequest.getPublicId();
@@ -41,10 +40,50 @@ public class AuthServiceImpl implements AuthService {
         String email = signupRequest.getEmail();
         String club = signupRequest.getClub();
 
-        // 중복 데이터 확인
+        // ""값 방지
+        if (publicId.isEmpty() || password.isEmpty() || email.isEmpty() || club.isEmpty()) {
+            throw new ValueMissingException("빈 값이 존재");
+        }
 
+        // 아이디 유효성 검사
+        if (publicId.length() < 4 || publicId.length() > 20) {
+            throw new IllegalArgumentsException("길이가 잘못됨");
+        }
+        if (!publicId.matches("^[a-zA-Z0-9]+$")) {
+            throw new IllegalArgumentsException("영어, 숫자 이외의 글자");
+        }
+        if (publicId.matches(".*(.)\\1{2,}.*")) {
+            throw new IllegalArgumentsException("3글자 이상 연속");
+        }
+        if (!publicId.matches("^(?=.*[A-Za-z])(?=.*\\d).+$")) {
+            throw new IllegalArgumentsException("영어, 숫자 포함 안 됨");
+        }
+
+        // 비밀번호 유효성 검사
+        if (password.length() < 6 || password.length() > 20) {
+            throw new IllegalArgumentsException("길이가 잘못됨");
+        }
+        if (!password.matches("^[A-Za-z0-9@$!%*?&]+$")) {
+            throw new IllegalArgumentsException("영어, 숫자, 특수문자 이외의 글자");
+        }
+        if (password.matches(".*(.)\\1{2,}.*")) {
+            throw new IllegalArgumentsException("3글자 이상 연속");
+        }
+        if (!password.matches("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*?&]).+$")) {
+            throw new IllegalArgumentsException("영어, 숫자, 특수문자를 포함 안 됨");
+        }
+
+        // 학번 확인
+
+
+        // 중복 데이터 확인
+        if (!userRepository.existsByPublicId(publicId) ||
+            !userRepository.existsByEmail(email)) {
+            throw new AlreadyUsingIdException("이미 존재함");
+        }
 
         User user = new User(studentNumber, publicId, passwordEncoder.encode(password), email, club);
+        userRepository.save(user);
     }
 
     @Override
