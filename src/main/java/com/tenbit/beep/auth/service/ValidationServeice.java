@@ -1,13 +1,16 @@
 package com.tenbit.beep.auth.service;
 
+import com.tenbit.beep.auth.dto.LoginRequest;
+import com.tenbit.beep.auth.dto.SignupRequest;
+
 public interface ValidationServeice {
 
-    void checkNull(String publicId, String password, String email, String club);
+    void checkNull(SignupRequest signupRequest);
+    void checkNull(LoginRequest loginRequest);
     void checkPublicId(String publicId);
     void checkPassword(String password);
     void checkStudentNumber(int studentNumber);
     void checkEmail(String email);
-    void checkClub(String club);
 
     void checkExistAccount(String publicId, String email);
 }

@@ -7,5 +7,5 @@ import com.tenbit.beep.common.exception.IllegalArgumentsException;
 public interface AuthService {
 
     void signup(SignupRequest signupRequest);
-    String login(LoginRequest loginRequest);
+    String login(String userAgent, LoginRequest loginRequest);
 }

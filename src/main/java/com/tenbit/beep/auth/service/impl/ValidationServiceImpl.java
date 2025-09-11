@@ -1,5 +1,7 @@
 package com.tenbit.beep.auth.service.impl;
 
+import com.tenbit.beep.auth.dto.LoginRequest;
+import com.tenbit.beep.auth.dto.SignupRequest;
 import com.tenbit.beep.auth.repository.UserRepository;
 import com.tenbit.beep.auth.service.ValidationServeice;
 import com.tenbit.beep.common.exception.AlreadyUsingIdException;
@@ -14,8 +16,23 @@ public class ValidationServiceImpl implements ValidationServeice {
     private final UserRepository userRepository;
 
     @Override
-    public void checkNull(String publicId, String password, String email, String club) {
+    public void checkNull(SignupRequest signupRequest) {
+        String publicId = signupRequest.getPublicId();
+        String password = signupRequest.getPassword();
+        String email = signupRequest.getEmail();
+        String club = signupRequest.getClub();
+
         if (publicId.isEmpty() || password.isEmpty() || email.isEmpty() || club.isEmpty()) {
+            throw new IllegalArgumentsException("빈 값 존재");
+        }
+    }
+
+    @Override
+    public void checkNull(LoginRequest loginRequest) {
+        String publicId = loginRequest.getPublicId();
+        String password = loginRequest.getPassword();
+
+        if (publicId.isEmpty() || password.isEmpty()) {
             throw new IllegalArgumentsException("빈 값 존재");
         }
     }
@@ -62,9 +79,9 @@ public class ValidationServiceImpl implements ValidationServeice {
             throw new IllegalArgumentsException("학번 오류");
         }
 
-        int grade = studentNumber / 1000;             // 첫째 자리
-        int classNum = (studentNumber / 100) % 10;    // 둘째 자리
-        int number = studentNumber % 100;             // 셋째, 넷째 자리
+        int grade = studentNumber / 1000;
+        int classNum = (studentNumber / 100) % 10;
+        int number = studentNumber % 100;
 
         if (grade < 1 || grade > 3) {
             throw new IllegalArgumentsException("학번 오류");
@@ -85,14 +102,9 @@ public class ValidationServiceImpl implements ValidationServeice {
     }
 
     @Override
-    public void checkClub(String club) {
-
-    }
-
-    @Override
     public void checkExistAccount(String publicId, String email) {
-        if (!userRepository.existsByPublicId(publicId) ||
-                !userRepository.existsByEmail(email)) {
+        if (userRepository.existsByPublicId(publicId) ||
+                userRepository.existsByEmail(email)) {
             throw new AlreadyUsingIdException("이미 존재함");
         }
     }

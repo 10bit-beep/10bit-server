@@ -1,5 +1,6 @@
 package com.tenbit.beep.auth.service.impl;
 
+import com.tenbit.beep.auth.domain.Authority;
 import com.tenbit.beep.auth.domain.User;
 import com.tenbit.beep.auth.dto.LoginRequest;
 import com.tenbit.beep.auth.dto.SignupRequest;
@@ -35,6 +36,9 @@ public class AuthServiceImpl implements AuthService {
     public void signup(SignupRequest signupRequest) {
         // 웹에서 1차 검사 진행한 값을 가져옴
 
+        // ""값 방지
+        validationServeice.checkNull(signupRequest);
+
         // dto 값 추출
         int studentNumber = signupRequest.getStudentNumber();
         String publicId = signupRequest.getPublicId();
@@ -42,13 +46,10 @@ public class AuthServiceImpl implements AuthService {
         String email = signupRequest.getEmail();
         String club = signupRequest.getClub();
 
-        // ""값 방지
-        validationServeice.checkNull(publicId, password, email, club);
-
-        // 아이디 유효성 검사
+        // 아이디 확인
         validationServeice.checkPublicId(publicId);
 
-        // 비밀번호 유효성 검사
+        // 비밀번호 확인
         validationServeice.checkPassword(password);
 
         // 학번 확인
@@ -57,8 +58,7 @@ public class AuthServiceImpl implements AuthService {
         // 이메일 확인
         validationServeice.checkEmail(email);
 
-        // 실명 확인
-        validationServeice.checkClub(club);
+        // 실명 확인 생략
 
         // 중복 데이터 확인
         validationServeice.checkExistAccount(publicId, email);
@@ -68,29 +68,40 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public String login(LoginRequest loginRequest) {
+    public String login(String userAgent, LoginRequest loginRequest) {
+        // 웹에서 1차 검사 진행한 값을 가져옴
+
+        // ""값 방지
+        validationServeice.checkNull(loginRequest);
+
         String publicId = loginRequest.getPublicId();
         String password = loginRequest.getPassword();
 
-        // null값 확인
-        if (!(publicId != null && password != null)) {
-            throw new ValueMissingException("빈 값을 넣을 수 없습니다.");
-        }
-
-        Optional<User> optionalUser = userRepository.findByPublicId(publicId);
+        Optional<User> tempUser = userRepository.findByPublicId(publicId);
 
         // 실존 유저인지 확인
-        if (optionalUser.isEmpty()) {
-            throw new UserNotFoundException(publicId + "의 유저를 찾을 수 없습니다.");
+        if (tempUser.isEmpty()) {
+            throw new UserNotFoundException("유저 조회 실패");
         }
 
-        User user = optionalUser.get();
+        User user = tempUser.get();
 
         // 비밀번호 확인
-        if (passwordEncoder.matches(password, user.getPassword())) {
-            return jwtTokenProvider.generateToken(String.valueOf(user.getInnerId()));
-        } else {
-            throw new UserNotFoundException("비밀번호가 일치하지 않습니다.");
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            throw new UserNotFoundException("유저 조회 실패");
         }
+
+        // 로그인 환경 확인
+        Authority authority;
+
+        if (userAgent.contains("Android") || userAgent.contains("iOS")) {
+            authority = Authority.STUDENT;
+        } else {
+            authority = Authority.TEACHER;
+        }
+
+        user.setAuthority(authority);
+
+        return jwtTokenProvider.generateToken(String.valueOf(user.getInnerId()));
     }
 }
