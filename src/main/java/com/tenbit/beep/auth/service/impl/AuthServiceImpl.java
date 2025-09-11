@@ -101,7 +101,6 @@ public class AuthServiceImpl implements AuthService {
         }
 
         user.setAuthority(authority);
-
         return jwtTokenProvider.generateToken(String.valueOf(user.getInnerId()));
     }
 }

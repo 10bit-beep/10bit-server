@@ -34,7 +34,6 @@ public class AuthController {
     public ResponseEntity<Object> login(
             @RequestHeader("userAgent") String userAgent, // 웹, 앱 구분하는 부분 받아옴
             @RequestBody LoginRequest loginRequest) {
-
         String token = authService.login(userAgent, loginRequest);
         return ResponseEntity.ok(Map.of("token", token));
     }
