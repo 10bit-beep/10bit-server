@@ -52,10 +52,16 @@ public class AuthServiceImpl implements AuthService {
         validationServeice.checkPassword(password);
 
         // 학번 확인
+        validationServeice.checkStudentNumber(studentNumber);
 
+        // 이메일 확인
+        validationServeice.checkEmail(email);
+
+        // 실명 확인
+        validationServeice.checkClub(club);
 
         // 중복 데이터 확인
-
+        validationServeice.checkExistAccount(publicId, email);
 
         User user = new User(studentNumber, publicId, passwordEncoder.encode(password), email, club);
         userRepository.save(user);

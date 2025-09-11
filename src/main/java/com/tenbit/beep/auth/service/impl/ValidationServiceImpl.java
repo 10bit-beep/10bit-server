@@ -1,11 +1,17 @@
 package com.tenbit.beep.auth.service.impl;
 
+import com.tenbit.beep.auth.repository.UserRepository;
 import com.tenbit.beep.auth.service.ValidationServeice;
+import com.tenbit.beep.common.exception.AlreadyUsingIdException;
 import com.tenbit.beep.common.exception.IllegalArgumentsException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class ValidationServiceImpl implements ValidationServeice {
+
+    private final UserRepository userRepository;
 
     @Override
     public void checkNull(String publicId, String password, String email, String club) {
@@ -48,12 +54,34 @@ public class ValidationServiceImpl implements ValidationServeice {
 
     @Override
     public void checkStudentNumber(int studentNumber) {
+        if (studentNumber == 1000) {
+            return;
+        }
 
+        if (studentNumber < 1101 || studentNumber > 3418) {
+            throw new IllegalArgumentsException("학번 오류");
+        }
+
+        int grade = studentNumber / 1000;             // 첫째 자리
+        int classNum = (studentNumber / 100) % 10;    // 둘째 자리
+        int number = studentNumber % 100;             // 셋째, 넷째 자리
+
+        if (grade < 1 || grade > 3) {
+            throw new IllegalArgumentsException("학번 오류");
+        }
+        if (classNum < 1 || classNum > 4) {
+            throw new IllegalArgumentsException("학번 오류");
+        }
+        if (number < 1 || number > 18) {
+            throw new IllegalArgumentsException("학번 오류");
+        }
     }
 
     @Override
     public void checkEmail(String email) {
-
+        if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
+            throw new IllegalArgumentsException("이메일 오류");
+        }
     }
 
     @Override
@@ -63,6 +91,9 @@ public class ValidationServiceImpl implements ValidationServeice {
 
     @Override
     public void checkExistAccount(String publicId, String email) {
-
+        if (!userRepository.existsByPublicId(publicId) ||
+                !userRepository.existsByEmail(email)) {
+            throw new AlreadyUsingIdException("이미 존재함");
+        }
     }
 }
