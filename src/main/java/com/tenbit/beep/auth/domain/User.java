@@ -48,6 +48,9 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Attend> attends = new ArrayList<>();
 
+    @Column(name = "class", insertable = false, updatable = false)
+    private String userClass;
+
     // 계정 생성시 이용
     public User(int studentNumber, String publicId, String password, String email, String club) {
         this.studentNumber = studentNumber;
