@@ -26,12 +26,7 @@ public class AttendanceServiceImpl implements AttendanceService {
     }
 
     @Override
-    public void CheckOutAttendance() {
-        List<User> users = userRepository.findAll();
-        for (User user : users) {
-            user.setAttendance(Attendance.ABSENT);
-        }
-        userRepository.saveAll(users);
-
+    public void checkOutAttendance() {
+        userRepository.resetAllAttendance(Attendance.ABSENT);
     }
 }

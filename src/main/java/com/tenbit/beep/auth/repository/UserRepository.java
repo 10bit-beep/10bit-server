@@ -1,9 +1,12 @@
 package com.tenbit.beep.auth.repository;
 
+import com.tenbit.beep.auth.domain.Attendance;
 import com.tenbit.beep.auth.domain.User;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -23,4 +26,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
     void deleteByInnerId(Long innerId);
     @Transactional
     void deleteByPublicId(String publicId);
+
+    // 출석 상태 초기화
+    @Transactional
+    @Modifying
+    @Query("UPDATE User user SET user.attendance = :status")
+    void resetAllAttendance(@Param("status") Attendance attendance);
 }
