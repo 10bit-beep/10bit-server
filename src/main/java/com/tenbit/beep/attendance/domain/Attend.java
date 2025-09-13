@@ -1,5 +1,6 @@
 package com.tenbit.beep.attendance.domain;
 
+import com.tenbit.beep.auth.domain.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,4 +24,8 @@ public class Attend {
     @Column(name = "att_time", nullable = false)
     @CreationTimestamp
     private LocalDateTime attendanceDateTime;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "inner_id")
+    private User user;
 }

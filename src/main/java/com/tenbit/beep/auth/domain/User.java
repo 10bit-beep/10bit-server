@@ -1,9 +1,13 @@
 package com.tenbit.beep.auth.domain;
 
+import com.tenbit.beep.attendance.domain.Attend;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 // 테이블 명세서 설명 참고
 @Entity
@@ -40,6 +44,9 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     private Attendance attendance;
+
+    @OneToMany(mappedBy = "user")
+    private List<Attend> attends = new ArrayList<>();
 
     // 계정 생성시 이용
     public User(int studentNumber, String publicId, String password, String email, String club) {
