@@ -1,75 +1,66 @@
 package com.tenbit.beep.auth.domain;
 
-import com.tenbit.beep.attendance.domain.Attendance;
+import com.tenbit.beep.attendance.domain.Attend;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
+// 테이블 명세서 설명 참고
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
+@Table(name = "users")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "inner_id", nullable = false)
     private Long innerId;
 
-    @Column(nullable = false)
-    @Min(0)
-    @Max(4000)
-    // 선생님은 1000, 사실상 가비지값 넣어주는거
-    private int studentNumber;
-
-    @Enumerated(EnumType.STRING)
-    private Authority authority;
-
-    @Enumerated(EnumType.STRING)
-    private Attendance attendance;
-
-//    @Column(nullable = false, length = 10)
-//    @Size(min = 2, max = 10)
-//    private String name;
-
-    @Column(unique = true, nullable = false, length = 15)
-    @Size(min = 4, max = 15)
+    @Column(name = "public_id", nullable = false, unique = true)
     private String publicId;
 
-    @Column(nullable = false, length = 255)
-    @Size(min = 8, max = 255)
+    @Column(name = "pw", nullable = false)
     private String password;
 
-    @Column(unique = true, nullable = false)
-    @Email
+    @Column(name = "stu_num", nullable = false)
+    private Integer studentNumber;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "authority", nullable = false)
+    private Authority authority;
+
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-//    @Column
-//    @Min(1)
-//    @Max(4)
-//    private Integer clubRoomNumber;
+    @Column(name = "club", nullable = false)
+    private String club;
 
-    @Column(nullable = false)
-    private String primaryClassRoomName;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
+    private Attendance attendance;
 
-    @Column
-    private String primaryClubRoomName;
+    @OneToMany(mappedBy = "user")
+    private List<Attend> attends = new ArrayList<>();
 
-    public User(int studentNumber, String publicId, String password, String email) {
+    @Column(name = "class", insertable = false, updatable = false)
+    private String userClass;
+
+    // 계정 생성시 이용
+    public User(int studentNumber, String publicId, String password, String email, String club) {
         this.studentNumber = studentNumber;
-//        this.name = name;
         this.publicId = publicId;
         this.password = password;
         this.email = email;
-        this.attendance = Attendance.FALSE;
-        this.authority = Authority.STUDENT;
-//        this.clubRoomNumber = null;
+        this.club = club;
 
-        this.primaryClassRoomName = String.valueOf(studentNumber / 1000) + "학년 " + String.valueOf(studentNumber / 100 % 10) + "반";
-        this.primaryClubRoomName = "CNS";
+        // 기본값 설정, NULL 방지
+        this.authority = Authority.STUDENT;
+        this.attendance = Attendance.ATTEND;
     }
 }

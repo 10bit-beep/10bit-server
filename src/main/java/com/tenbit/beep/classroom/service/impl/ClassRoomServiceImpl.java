@@ -1,7 +1,7 @@
 package com.tenbit.beep.classroom.service.impl;
 
 import com.tenbit.beep.auth.domain.User;
-import com.tenbit.beep.classroom.dto.LookUpStudentsByClassRequest;
+import com.tenbit.beep.classroom.dto.ClassRoomRequest;
 import com.tenbit.beep.classroom.dto.StudentInfoResponse;
 import com.tenbit.beep.classroom.repository.ClassRoomRepository;
 import com.tenbit.beep.classroom.service.ClassRoomService;
@@ -18,25 +18,12 @@ public class ClassRoomServiceImpl implements ClassRoomService {
 
     private final ClassRoomRepository classRoomRepository;
 
-//    @Override
-//    public List<ClassRoom> lookUpStudentsByClassRoom(LookUpStudentsRequest lookUpStudentsRequest) {
-//
-//        List<ClassRoom> students = classRoomRepository.findByClassRoomName(lookUpStudentsRequest.getClassRoomName());
-//
-//        if (students.isEmpty()) {
-//            lookUpStudentsByPrimaryClassRoom(lookUpStudentsRequest);
-//        }
-//
-//        return students;
-//    }
-
     @Override
-    public List<StudentInfoResponse> lookUpStudentsByPrimaryClassRoom(LookUpStudentsByClassRequest lookUpStudentsRequest) {
+    public List<StudentInfoResponse> lookUpStudentsByUserClass(ClassRoomRequest classRoomRequest) {
 
-        List<User> students = classRoomRepository.findByPrimaryClassRoomName(lookUpStudentsRequest.getClassRoomName());
+        List<User> students = classRoomRepository.findByUserClass(classRoomRequest.getUserClass());
 
         if (students.isEmpty()) {
-
             throw new UserNotFoundException("학생이 조회 되지 않았습니다.");
         }
 

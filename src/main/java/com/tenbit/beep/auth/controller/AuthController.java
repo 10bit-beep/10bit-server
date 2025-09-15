@@ -7,52 +7,34 @@ import com.tenbit.beep.auth.dto.SignupRequest;
 import com.tenbit.beep.auth.repository.UserRepository;
 import com.tenbit.beep.auth.service.AuthService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/auth")
 public class AuthController {
 
+    // login, signup 함수 가져옴
     private final AuthService authService;
+    // Jpa 함수 가져옴
     private final UserRepository userRepository;
 
+    // 회원가입
     @PostMapping("/signup")
     public ResponseEntity<Object> signup(@RequestBody SignupRequest signupRequest) {
-        try {
-            authService.signup(signupRequest);
-            return ResponseEntity.ok(Map.of("publicId", signupRequest.getPublicId(), "success", true));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
+        authService.signup(signupRequest);
+        return ResponseEntity.ok(Map.of("publicId", signupRequest.getPublicId(), "success", true));
     }
 
+    // 로그인
     @PostMapping("/login")
     public ResponseEntity<Object> login(
-            @RequestHeader("userAgent") String userAgent,
+            @RequestHeader("userAgent") String userAgent, // 웹, 앱 구분하는 부분 받아옴
             @RequestBody LoginRequest loginRequest) {
-
-        String token = authService.login(loginRequest);
-
-        Optional<User> user = userRepository.findByPublicId(loginRequest.getPublicId());
-
-        if (userAgent.contains("Android") || userAgent.contains("iOS")) {
-            user.ifPresent(u -> {
-                u.setAuthority(Authority.STUDENT);
-                userRepository.save(u);
-            });
-        } else {
-            user.ifPresent(u -> {
-                u.setAuthority(Authority.TEACHER);
-                userRepository.save(u);
-            });
-        }
-
+        String token = authService.login(userAgent, loginRequest);
         return ResponseEntity.ok(Map.of("token", token));
     }
 }

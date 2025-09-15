@@ -1,6 +1,6 @@
 package com.tenbit.beep.clubroom.controller;
 
-import com.tenbit.beep.clubroom.dto.LookUpStudentsByClubRequest;
+import com.tenbit.beep.clubroom.dto.ClubRoomRequest;
 import com.tenbit.beep.clubroom.service.ClubRoomService;
 import com.tenbit.beep.classroom.dto.StudentInfoResponse;
 import lombok.RequiredArgsConstructor;
@@ -21,9 +21,9 @@ public class ClubRoomController {
 
     @PostMapping("/lookup")
     public ResponseEntity<List<StudentInfoResponse>> lookup(
-            @RequestBody LookUpStudentsByClubRequest lookUpStudentsRequest) {
+            @RequestBody ClubRoomRequest clubRoomRequest) {
 
-        List<StudentInfoResponse> students = clubRoomService.lookUpStudentsByPrimaryClubRoom(lookUpStudentsRequest);
+        List<StudentInfoResponse> students = clubRoomService.lookUpStudentsByClub(clubRoomRequest);
 
         return ResponseEntity.ok(students);
     }

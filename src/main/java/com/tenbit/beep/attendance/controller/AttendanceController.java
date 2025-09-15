@@ -1,12 +1,10 @@
 package com.tenbit.beep.attendance.controller;
 
+import com.tenbit.beep.attendance.dto.AttendRequest;
 import com.tenbit.beep.attendance.service.AttendanceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/attendance")
@@ -16,14 +14,14 @@ public class AttendanceController {
     private final AttendanceService attendanceService;
 
     @PostMapping("/check")
-    public ResponseEntity<String> checkAttendance(@RequestParam String publicId) {
-        attendanceService.markAttendance(publicId);
+    public ResponseEntity<String> checkAttendance(@RequestBody AttendRequest attendRequest) {
+        attendanceService.markAttendance(attendRequest);
         return ResponseEntity.ok("출석 완료");
     }
 
     @PostMapping("/reset")
     public ResponseEntity<String> resetAttendance() {
-        attendanceService.CheckOutAttendance();
+        attendanceService.checkOutAttendance();
         return ResponseEntity.ok("퇴실 완료");
     }
 

@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class LookUpStudentsByClubRequest {
+public class ClubRoomRequest {
 
-    String clubRoomName;
+    String club;
 }
