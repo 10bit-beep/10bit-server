@@ -1,11 +1,11 @@
 package com.tenbit.beep.classroom.service;
 
 import com.tenbit.beep.classroom.dto.ClassRoomRequest;
-import com.tenbit.beep.classroom.dto.StudentInfoResponse;
+import com.tenbit.beep.classroom.dto.ClassRoomResponse;
 
 import java.util.List;
 
 public interface ClassRoomService {
 
-    List<StudentInfoResponse> lookUpStudentsByUserClass(ClassRoomRequest classRoomRequest);
+    List<ClassRoomResponse> lookUpStudentsByUserClass(ClassRoomRequest classRoomRequest);
 }

@@ -2,7 +2,7 @@ package com.tenbit.beep.classroom.service.impl;
 
 import com.tenbit.beep.auth.domain.User;
 import com.tenbit.beep.classroom.dto.ClassRoomRequest;
-import com.tenbit.beep.classroom.dto.StudentInfoResponse;
+import com.tenbit.beep.classroom.dto.ClassRoomResponse;
 import com.tenbit.beep.classroom.repository.ClassRoomRepository;
 import com.tenbit.beep.classroom.service.ClassRoomService;
 import com.tenbit.beep.common.exception.UserNotFoundException;
@@ -19,7 +19,7 @@ public class ClassRoomServiceImpl implements ClassRoomService {
     private final ClassRoomRepository classRoomRepository;
 
     @Override
-    public List<StudentInfoResponse> lookUpStudentsByUserClass(ClassRoomRequest classRoomRequest) {
+    public List<ClassRoomResponse> lookUpStudentsByUserClass(ClassRoomRequest classRoomRequest) {
 
         List<User> students = classRoomRepository.findByUserClass(classRoomRequest.getUserClass());
 
@@ -28,7 +28,7 @@ public class ClassRoomServiceImpl implements ClassRoomService {
         }
 
         return students.stream()
-                .map(StudentInfoResponse::from)
+                .map(ClassRoomResponse::from)
                 .collect(Collectors.toList());
     }
 }

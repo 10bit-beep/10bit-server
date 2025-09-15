@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/attendance")
 @RequiredArgsConstructor
@@ -22,7 +24,7 @@ public class AttendanceController {
     @PostMapping("/reset")
     public ResponseEntity<String> resetAttendance() {
         attendanceService.checkOutAttendance();
-        return ResponseEntity.ok("퇴실 완료");
+        return ResponseEntity.ok("출석 초기화 완료");
     }
 
 }

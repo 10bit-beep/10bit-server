@@ -1,7 +1,7 @@
 package com.tenbit.beep.classroom.controller;
 
 import com.tenbit.beep.classroom.dto.ClassRoomRequest;
-import com.tenbit.beep.classroom.dto.StudentInfoResponse;
+import com.tenbit.beep.classroom.dto.ClassRoomResponse;
 import com.tenbit.beep.classroom.service.ClassRoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,10 +20,10 @@ public class ClassRoomController {
     private final ClassRoomService classRoomService;
 
     @PostMapping("/lookup")
-    public ResponseEntity<List<StudentInfoResponse>> lookup(
+    public ResponseEntity<List<ClassRoomResponse>> lookup(
             @RequestBody ClassRoomRequest classRoomRequest) {
 
-        List<StudentInfoResponse> students = classRoomService.lookUpStudentsByUserClass(classRoomRequest);
+        List<ClassRoomResponse> students = classRoomService.lookUpStudentsByUserClass(classRoomRequest);
 
         return ResponseEntity.ok(students);
     }
