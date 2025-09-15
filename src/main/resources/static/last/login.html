@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>로그인 테스트</title>
+</head>
+<body>
+<h1>로그인</h1>
+<input id="publicId" placeholder="아이디" />
+<input id="password" type="password" placeholder="비밀번호" />
+<button id="login-btn">로그인</button>
+<button onclick="history.back()">돌아가기</button>
+
+<script>
+  document.getElementById("login-btn").onclick = async function () {
+    const publicId = document.getElementById("publicId").value;
+    const password = document.getElementById("password").value;
+
+    const res = await fetch("/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Platform": "WEB"
+      },
+      body: JSON.stringify({ publicId, password }),
+    });
+
+    if (res.ok) {
+      const token = await res.text();
+      alert("로그인 성공! 토큰: " + token);
+    } else {
+      alert("로그인 실패");
+    }
+  };
+</script>
+</body>
+</html>

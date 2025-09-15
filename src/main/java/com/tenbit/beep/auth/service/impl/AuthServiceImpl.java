@@ -63,7 +63,14 @@ public class AuthServiceImpl implements AuthService {
         // 중복 데이터 확인
         validationServeice.checkExistAccount(publicId, email);
 
-        User user = new User(studentNumber, publicId, passwordEncoder.encode(password), email, club);
+        User user = User.builder()
+                .studentNumber(studentNumber)
+                .publicId(publicId)
+                .password(passwordEncoder.encode(password))
+                .email(email)
+                .club(club)
+                .build();
+
         userRepository.save(user);
     }
 
