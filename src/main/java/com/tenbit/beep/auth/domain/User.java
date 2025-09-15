@@ -55,17 +55,4 @@ public class User {
         private Authority authority = Authority.STUDENT;
         private Attendance attendance = Attendance.ABSENT;
     }
-
-//    // 계정 생성시 이용
-//    public User(int studentNumber, String publicId, String password, String email, String club) {
-//        this.studentNumber = studentNumber;
-//        this.publicId = publicId;
-//        this.password = password;
-//        this.email = email;
-//        this.club = club;
-//
-//        // 기본값 설정, NULL 방지
-//        this.authority = Authority.STUDENT;
-//        this.attendance = Attendance.ATTEND;
-//    }
 }
