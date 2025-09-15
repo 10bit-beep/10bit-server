@@ -84,11 +84,10 @@ public class AttendanceServiceImpl implements AttendanceService {
             user.setAttendance(Attendance.FALSE);
         }
         userRepository.saveAll(users);
-
     }
 
     private String getNfcTagFromReader() {
         // 임시값
-        return "C1_1";
+        return "C1_1"; //nullable
     }
 }
