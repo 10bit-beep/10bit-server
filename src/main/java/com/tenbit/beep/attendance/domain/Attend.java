@@ -2,9 +2,7 @@ package com.tenbit.beep.attendance.domain;
 
 import com.tenbit.beep.auth.domain.User;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
@@ -14,6 +12,8 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @Table(name = "attendances")
+@AllArgsConstructor
+@Builder
 public class Attend {
 
     @Id

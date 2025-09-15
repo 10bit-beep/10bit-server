@@ -41,8 +41,9 @@ public class AttendanceServiceImpl implements AttendanceService {
             throw new AttendException("잘못된 실");
         }
 
-        Attend attend = new Attend();
-        attend.setUser(user);
+        Attend attend = Attend.builder()
+                .user(user)
+                .build();
 
         // 자동 퇴실
         attendRepository.save(attend);

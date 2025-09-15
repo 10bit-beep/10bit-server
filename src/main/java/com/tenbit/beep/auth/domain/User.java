@@ -2,9 +2,7 @@ package com.tenbit.beep.auth.domain;
 
 import com.tenbit.beep.attendance.domain.Attend;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +13,8 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @Table(name = "users")
+@Builder
+@AllArgsConstructor
 public class User {
 
     @Id
@@ -51,16 +51,8 @@ public class User {
     @Column(name = "class", insertable = false, updatable = false)
     private String userClass;
 
-    // 계정 생성시 이용
-    public User(int studentNumber, String publicId, String password, String email, String club) {
-        this.studentNumber = studentNumber;
-        this.publicId = publicId;
-        this.password = password;
-        this.email = email;
-        this.club = club;
-
-        // 기본값 설정, NULL 방지
-        this.authority = Authority.STUDENT;
-        this.attendance = Attendance.ATTEND;
+    public static class UserBuilder {
+        private Authority authority = Authority.STUDENT;
+        private Attendance attendance = Attendance.ABSENT;
     }
 }
