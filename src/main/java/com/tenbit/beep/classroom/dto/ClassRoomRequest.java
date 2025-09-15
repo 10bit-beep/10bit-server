@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ClassroomRequest {
+public class ClassRoomRequest {
 
     String userClass;
 }
