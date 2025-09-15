@@ -1,4 +1,4 @@
-package com.tenbit.beep.classroom.dto;
+package com.tenbit.beep.clubroom.dto;
 
 import com.tenbit.beep.auth.domain.Attendance;
 import com.tenbit.beep.auth.domain.User;
@@ -11,16 +11,16 @@ import lombok.ToString;
 @Setter
 @AllArgsConstructor
 @ToString
-public class StudentInfoResponse {
+public class ClubRoomResponse {
 
     private int studentNumber;
-    private String userClass;
+    private String userClub;
     private Attendance attendance;
 
-    public static StudentInfoResponse from(User user) {
-        return new StudentInfoResponse(
+    public static ClubRoomResponse from(User user) {
+        return new ClubRoomResponse(
                 user.getStudentNumber(),
-                user.getUserClass(),
+                user.getClub(),
                 user.getAttendance()
         );
     }

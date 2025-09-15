@@ -26,7 +26,7 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<Object> signup(@RequestBody SignupRequest signupRequest) {
         authService.signup(signupRequest);
-        return ResponseEntity.ok(Map.of("publicId", signupRequest.getPublicId(), "success", true));
+        return ResponseEntity.ok(Map.of("success", true, "publicId", signupRequest.getPublicId()));
     }
 
     // 로그인
@@ -35,6 +35,6 @@ public class AuthController {
             @RequestHeader("userAgent") String userAgent, // 웹, 앱 구분하는 부분 받아옴
             @RequestBody LoginRequest loginRequest) {
         String token = authService.login(userAgent, loginRequest);
-        return ResponseEntity.ok(Map.of("token", token));
+        return ResponseEntity.ok(Map.of("success", true, "token", token));
     }
 }

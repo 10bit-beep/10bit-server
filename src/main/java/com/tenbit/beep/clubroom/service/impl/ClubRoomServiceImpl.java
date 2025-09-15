@@ -2,9 +2,9 @@ package com.tenbit.beep.clubroom.service.impl;
 
 import com.tenbit.beep.auth.domain.User;
 import com.tenbit.beep.clubroom.dto.ClubRoomRequest;
+import com.tenbit.beep.clubroom.dto.ClubRoomResponse;
 import com.tenbit.beep.clubroom.repository.ClubRoomRepository;
 import com.tenbit.beep.clubroom.service.ClubRoomService;
-import com.tenbit.beep.classroom.dto.StudentInfoResponse;
 import com.tenbit.beep.common.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ public class ClubRoomServiceImpl implements ClubRoomService {
     private final ClubRoomRepository clubRoomRepository;
 
     @Override
-    public List<StudentInfoResponse> lookUpStudentsByClub(ClubRoomRequest clubRoomRequest) {
+    public List<ClubRoomResponse> lookUpStudentsByClub(ClubRoomRequest clubRoomRequest) {
         List<User> students = clubRoomRepository.findByClub(clubRoomRequest.getClub());
 
         if (students.isEmpty()) {
@@ -27,7 +27,7 @@ public class ClubRoomServiceImpl implements ClubRoomService {
         }
 
         return students.stream()
-                .map(StudentInfoResponse::from)
+                .map(ClubRoomResponse::from)
                 .collect(Collectors.toList());
     }
 }
