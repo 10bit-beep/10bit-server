@@ -12,6 +12,7 @@ import com.tenbit.beep.common.exception.AttendException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -25,8 +26,13 @@ public class AttendanceServiceImpl implements AttendanceService {
     private final ThreadPoolTaskScheduler taskScheduler;
 
     @Override
+    @Transactional
     public void markAttendance(AttendRequest attendRequest) {
-        String nfcTag = getNfcTagFromReader();
+        String nfcTag = attendRequest.getNfcTag();
+
+        if (nfcTag == null || nfcTag.trim().isEmpty()) {
+            throw new AttendException("NFC태그 값이 비어있음");
+        }
 
         User user = userRepository.findByPublicId(attendRequest.getPublicId())
                 .orElseThrow(() -> new IllegalArgumentException("사용자 찾을 수 없음."));
@@ -37,9 +43,13 @@ public class AttendanceServiceImpl implements AttendanceService {
 
         if (!nfcTag.equals(user.getUserClass()) && !nfcTag.equals(user.getClub())) {
             System.out.println(user.getUserClass());
+            System.out.println(user.getClub());
             System.out.println(nfcTag);
             throw new AttendException("잘못된 실");
         }
+
+        user.setAttendance(Attendance.ATTEND);
+        userRepository.save(user);
 
         Attend attend = Attend.builder()
                 .user(user)
@@ -59,12 +69,8 @@ public class AttendanceServiceImpl implements AttendanceService {
     }
 
     @Override
+    @Transactional
     public void checkOutAttendance() {
         userRepository.resetAllAttendance(Attendance.ABSENT);
-    }
-
-    private String getNfcTagFromReader() {
-        // 임시값
-        return "1학년 0반";
     }
 }

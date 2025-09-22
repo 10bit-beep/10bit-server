@@ -8,4 +8,5 @@ import lombok.Setter;
 public class AttendRequest {
 
     private String publicId;
+    private String nfcTag;
 }
